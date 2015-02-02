@@ -20,7 +20,6 @@ typedef void(*funcPtr)(Entity*);
 void entity_DefaultMove(Entity* e);
 void entity_SharkMove(Entity* e);
 void entity_IcebergMove(Entity* e);
-void entity_assignPlayer(Entity* e);
 
 //end fwd declare
 extern std::list<Entity> entities;
@@ -73,6 +72,9 @@ extern Entity* player;
  * 
  */
 void drawEntity(Entity e);
+void entity_assignPlayer(Entity* e);
+float entity_GetDistance(Entity* e1, Entity* e2);
+bool entity_CheckCollision(Entity* e1, Entity* e2);
 
 void printText(float x, float y, std::string str, int r, int g, int b);
 void printText(float x, float y, std::string str);

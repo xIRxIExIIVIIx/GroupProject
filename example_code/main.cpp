@@ -158,6 +158,18 @@ void entity_assignPlayer(Entity* e) {
   //e->entType = ENT_PLAYER;
 }
 
+float entity_GetDistance(Entity* e1, Entity* e2) {
+  float dx = e2->coords.x - e1->coords.x;
+  float dy = e2->coords.y - e1->coords.y;
+  return sqrtf((dx * dx) + (dy * dy));
+}
+
+bool entity_CheckCollision(Entity* e1, Entity* e2) {
+  float dx = e2->coords.x - e1->coords.x;
+  float dy = e2->coords.y - e1->coords.y;
+  return entity_GetDistance(e1, e2) <= (e1->collisionRadius + e2->collisionRadius);
+}
+
 // This is the main display callback function.
 // It sets up an orthographic projection and calls Draw2D().
 void Draw()
