@@ -236,29 +236,29 @@ void Joystick(unsigned int btmsk, int x, int y, int z)
 
 int main(int argc,char **argv)
 {
-	printf(Instructions);
+  printf(Instructions);
 
-	glutInit(&argc,argv);
-//	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
-	glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);
-	glutInitWindowSize(windowWidth, windowHeight);
-	glutInitWindowPosition(200,100);
-	glutCreateWindow("2D_example_screen");
+  glutInit(&argc,argv);
+  //	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
+  glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);
+  glutInitWindowSize(windowWidth, windowHeight);
+  glutInitWindowPosition(200,100);
+  glutCreateWindow("2D_example_screen");
 
   glutTimerFunc(targetFramerate, gameLogic, 0); // Game logic here!
-	glutDisplayFunc(Draw);
-	glutReshapeFunc(Resize);
-	glutMouseFunc(OnMouseClick);
+  glutDisplayFunc(Draw);
+  glutReshapeFunc(Resize);
+  glutMouseFunc(OnMouseClick);
   glutPassiveMotionFunc(MouseMotion);
   glutMotionFunc(MouseMotion);
-	glutKeyboardFunc(Keyboard);
+  glutKeyboardFunc(Keyboard);
   glutJoystickFunc(Joystick, targetFramerate);
   glutIdleFunc(PollJoystick);
-	ilInit();
-	Init();
+  ilInit();
+  Init();
 	
-	glutMainLoop();
-	return 0;
+  glutMainLoop();
+  return 0;
 }
 
 /*
