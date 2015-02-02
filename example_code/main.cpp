@@ -75,8 +75,8 @@ void Init()
 
     // Use DevIL to load image from file:
     if (!ilLoadImage((const wchar_t *) imgstr[i])) {
-	    std::cout << "image file not loaded" << std::endl;
-	    exit(1);
+      std::cout << "image file not loaded" << std::endl;
+      exit(1);
     }
 
     // set image params:
