@@ -9,9 +9,9 @@ using namespace std;
 
 // Image data, used for loading textures in OpenGL
 typedef struct Image {
-	ILuint img_width;
-	ILuint img_height;
-	GLuint img_data; // Int id for image data.
+  ILuint img_width;
+  ILuint img_height;
+  GLuint img_data; // Int id for image data.
 } Image;
 
 std::list<Entity> entities; // Linked list of all entities (todo: replace with R*-tree from libspatialindex [?])
@@ -40,76 +40,76 @@ ILuint *g_img_name; // unsure, but needed.
 Image *g_images;  // pointer to image data.
 
 void drawEntity(Entity e) {
-	glColor4f(1.0,1.0,1.0,0.9); // set background color
-	glBindTexture(GL_TEXTURE_2D, g_images[e.entType].img_data); // choose which one before draw
-	glBegin(GL_QUADS); // begin quad
-    // draw four corners of image:
-		glTexCoord2f(0.0, 0.0); glVertex2f(e.coords.x, e.coords.y); 
-		glTexCoord2f(0.0, 1.0); glVertex2f(e.coords.x, e.coords.y + g_images[e.entType].img_height);
-		glTexCoord2f(1.0, 1.0); glVertex2f(e.coords.x + g_images[e.entType].img_height, e.coords.y + g_images[e.entType].img_height);
-		glTexCoord2f(1.0, 0.0); glVertex2f(e.coords.x + g_images[e.entType].img_height, e.coords.y);
-	glEnd();  // complete draw
+  glColor4f(1.0,1.0,1.0,0.9); // set background color
+  glBindTexture(GL_TEXTURE_2D, g_images[e.entType].img_data); // choose which one before draw
+  glBegin(GL_QUADS); // begin quad
+  // draw four corners of image:
+    glTexCoord2f(0.0, 0.0); glVertex2f(e.coords.x, e.coords.y); 
+    glTexCoord2f(0.0, 1.0); glVertex2f(e.coords.x, e.coords.y + g_images[e.entType].img_height);
+    glTexCoord2f(1.0, 1.0); glVertex2f(e.coords.x + g_images[e.entType].img_height, e.coords.y + g_images[e.entType].img_height);
+    glTexCoord2f(1.0, 0.0); glVertex2f(e.coords.x + g_images[e.entType].img_height, e.coords.y);
+  glEnd();  // complete draw
 }
 
 // This function is called to initialise opengl
 void Init()
 {
-	int count = 0; // for each image in sprits list (see sprites.h & sprites.cpp)
+  int count = 0; // for each image in sprits list (see sprites.h & sprites.cpp)
   targetFramerate = 1000 / targetFramerate;  // set target framerate to ms/frame rather than FPS
-	while (imgstr[count]) count++; // enumerate sprites
+  while (imgstr[count]) count++; // enumerate sprites
 
   glClearColor (1.0, 1.0, 1.0, 0.0); //set background color (white)
 
   glEnable(GL_DEPTH_TEST);
   //glDepthFunc(GL_LEQUAL);
-	//glEnable(GL_LIGHT0);
-	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+  //glEnable(GL_LIGHT0);
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 	g_img_name = new ILuint[count];
 	g_images = new Image[count];
 
   // for each image in the sprites list:
-	for (int i = 0; i < count; i++) {
-		ilGenImages(count, &g_img_name[i]); // initialize image data
-		ilBindImage(g_img_name[i]); // bind name to data
+  for (int i = 0; i < count; i++) {
+    ilGenImages(count, &g_img_name[i]); // initialize image data
+    ilBindImage(g_img_name[i]); // bind name to data
 
     // Use DevIL to load image from file:
-		if (!ilLoadImage((const wchar_t *) imgstr[i])) {
-			std::cout << "image file not loaded" << std::endl;
-			exit(1);
-		}
+    if (!ilLoadImage((const wchar_t *) imgstr[i])) {
+	    std::cout << "image file not loaded" << std::endl;
+	    exit(1);
+    }
 
     // set image params:
-		g_images[i].img_width = ilGetInteger(IL_IMAGE_WIDTH);
-		g_images[i].img_height = ilGetInteger(IL_IMAGE_HEIGHT);
-		ILenum img_format = ilGetInteger(IL_IMAGE_FORMAT);
-		ILenum img_type = ilGetInteger(IL_IMAGE_TYPE);
+    g_images[i].img_width = ilGetInteger(IL_IMAGE_WIDTH);
+    g_images[i].img_height = ilGetInteger(IL_IMAGE_HEIGHT);
+    ILenum img_format = ilGetInteger(IL_IMAGE_FORMAT);
+    ILenum img_type = ilGetInteger(IL_IMAGE_TYPE);
     // store image data:
-		ILubyte *img_data = ilGetData();
+    ILubyte *img_data = ilGetData();
 
     // generate OpenGL textures from image data & bind:
-		glGenTextures(count, &g_images[i].img_data);
-		glBindTexture(GL_TEXTURE_2D, g_images[i].img_data);
-		glTexImage2D(GL_TEXTURE_2D, 0, 3, g_images[i].img_width, g_images[i].img_height, 0, img_format, img_type, img_data);
+    glGenTextures(count, &g_images[i].img_data);
+    glBindTexture(GL_TEXTURE_2D, g_images[i].img_data);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, g_images[i].img_width, g_images[i].img_height, 0, img_format, img_type, img_data);
 
-		// ilDeleteImages(1, &g_img_name); // unsure what this does? Clears images from cache? if so, not needed.
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	  // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);  // also unsure, doesn't seem needed.
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	}
+    // ilDeleteImages(1, &g_img_name); // unsure what this does? Clears images from cache? if so, not needed.
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);  // also unsure, doesn't seem needed.
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+  }
 
   // Enable drawing:
-	glEnable(GL_TEXTURE_2D);
+  glEnable(GL_TEXTURE_2D);
   glShadeModel(GL_FLAT);
 
-	Entity(ENT_MEGAMAN, Coords(400, 400));
+  Entity(ENT_MEGAMAN, Coords(400, 400));
   entity_assignPlayer(&entities.front());
 
   // test charizard.
-	Entity(ENT_CHARIZARD, Coords(500, 400));
+  Entity(ENT_CHARIZARD, Coords(500, 400));
 }
 
 /*
@@ -174,39 +174,39 @@ bool entity_CheckCollision(Entity* e1, Entity* e2) {
 // It sets up an orthographic projection and calls Draw2D().
 void Draw()
 {
-	// Clear the background
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+  // Clear the background
+  glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
   // glShadeModel(GL_SMOOTH);
 
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_LIGHTING);
+  glDisable(GL_DEPTH_TEST);
+  glDisable(GL_LIGHTING);
 
-	glEnable(GL_TEXTURE_2D);
+  glEnable(GL_TEXTURE_2D);
   glShadeModel(GL_FLAT); // not really needed?
 
-	// for transparency
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+  // for transparency
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	// Set the orthographic viewing transformation
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0,windowWidth,windowHeight,0,-1,1);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+  // Set the orthographic viewing transformation
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  glOrtho(0,windowWidth,windowHeight,0,-1,1);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
 
-	Draw2D();
+  Draw2D();
 
-	// Bring the back buffer to the front and vice-versa
-	glutSwapBuffers();
+  // Bring the back buffer to the front and vice-versa
+  glutSwapBuffers();
 }
 
 // 	This function is called when the window is resized.
 void Resize(int w, int h)
 {
-	// Allow drawing in full region of the screen
-	glViewport(0,0,w,h);
+  // Allow drawing in full region of the screen
+  glViewport(0,0,w,h);
 }
 
 void gameLogic(int i)  //game logic goes here. No drawing stuff in this. Only movement / collision checking.
