@@ -10,13 +10,15 @@ typedef struct Coords {
   float y;
 } Coords;
 
-typedef enum GAME_STATE_TYPE {
-  MAIN_MENU
+typedef enum GAME_MODE {
+  GAME_MAIN_MENU,
+  GAME_STANDARD
 };
 
 //ENTITY FORWARD DECLARATIONS
 struct Entity;
-typedef void(*funcPtr)(Entity*);
+typedef void(*funcPtrEnt)(Entity*);
+typedef void(*funcPtr)(void);
 void entity_DefaultMove(Entity* e);
 void entity_IcebergMove(Entity* e);
 void entity_SharkMove(Entity* e);
@@ -69,7 +71,7 @@ typedef struct Entity {
   float collisionRadius;
   int health;
   bool invincible;
-  funcPtr move;
+  funcPtrEnt move;
 } Entity;
 
 typedef struct Mouse {
@@ -78,7 +80,13 @@ typedef struct Mouse {
   bool btn2;
 } Mouse;
 
+typedef struct GameState {
+  GAME_MODE gameMode;
+  long score;
+  long time;
+} GameState;
 
+extern GameState gameState;
 extern Entity* player;
 extern Mouse mouse;
 extern bool keys[255];

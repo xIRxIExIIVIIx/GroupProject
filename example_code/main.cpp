@@ -34,6 +34,7 @@ const char* Instructions = " a - move left\n d - move right\n";
 
 Mouse mouse; // mouse input data
 bool keys[255];
+GameState gameState;
 Entity* player; // Player pointer (currently set to first item added to entities)
 
 // OpenGL stuff:
@@ -53,7 +54,7 @@ void drawEntity(Entity e) {
 }
 
 // This function is called to initialise opengl
-void Init()
+void OGLInit()
 {
   int count = 0; // for each image in sprits list (see sprites.h & sprites.cpp)
   targetFramerate = 1000 / targetFramerate;  // set target framerate to ms/frame rather than FPS
@@ -105,12 +106,6 @@ void Init()
   // Enable drawing:
   glEnable(GL_TEXTURE_2D);
   glShadeModel(GL_FLAT);
-
-  Entity(ENT_PLAYER, Coords(400, 400));
-  entity_assignPlayer(&entities.front());
-
-  // test charizard.
-  Entity(ENT_ICEBERG, Coords(500, 500));
 }
 
 /*
@@ -195,7 +190,8 @@ void Draw()
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  Draw2D();
+  funcPtr drawModes[] = {&DrawMenu, &DrawGame};
+  drawModes[gameState.gameMode]();
 
   // Bring the back buffer to the front and vice-versa
   glutSwapBuffers();
@@ -233,6 +229,18 @@ void Joystick(unsigned int btmsk, int x, int y, int z)
   XInput();
 }
 
+void Init()
+{
+  gameState = {GAME_STANDARD, 0, 0};
+
+  Entity(ENT_PLAYER, Coords(400, 400));
+  entity_assignPlayer(&entities.front());
+
+  Entity(ENT_ICEBERG, Coords(500, 500));
+  Entity(ENT_SHARK, Coords(200, 200));
+  Entity(ENT_CTHULHU, Coords(700, 200));
+}
+
 int main(int argc,char **argv)
 {
   printf(Instructions);
@@ -241,7 +249,7 @@ int main(int argc,char **argv)
   //	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
   glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);
   glutInitWindowSize(windowWidth, windowHeight);
-  glutInitWindowPosition(200,100);
+  glutInitWindowPosition(200, 100);
   glutCreateWindow("2D_example_screen");
 
   glutTimerFunc(targetFramerate, gameLogic, 0); // Game logic here!
@@ -255,8 +263,10 @@ int main(int argc,char **argv)
   glutJoystickFunc(Joystick, targetFramerate);
   glutIdleFunc(PollJoystick);
   ilInit();
+  OGLInit();
+
   Init();
-	
+
   glutMainLoop();
   return 0;
 }

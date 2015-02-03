@@ -1,7 +1,5 @@
 #include "main.h"
 
-	//Entity player(ENT_MEGAMAN, Coords(200, 200));
-
 void entity_DefaultMove(Entity* e) {
   e->coords.x += e->movement.x;
   e->coords.y += e->movement.y;
@@ -59,8 +57,8 @@ void entity_CthulhuMove(Entity* e){
   float yDistance;
 	float diagDistance;
 
-	xDistance = e->coords.x - player->coords.x;		//golbal player issue
-	yDistance = e->coords.y - player->coords.y;		//golbal player issue
+	xDistance = e->coords.x - player->coords.x;
+	yDistance = e->coords.y - player->coords.y;
 	diagDistance = sqrt( (xDistance * xDistance) + (yDistance * yDistance) );
 
 	if (xDistance > yDistance){
@@ -81,10 +79,10 @@ void entity_CthulhuMove(Entity* e){
 void entity_BulletMove(Entity* e) {
 
 	if (e->movement.x==0)
-		e->movement.x = player->movement.x;		//global player issue
+		e->movement.x = player->movement.x;
 	
 	if (e->movement.y==0)
-		e->movement.y = player->movement.y;		//global player issue
+		e->movement.y = player->movement.y;
 	
 	entity_DefaultMove(e);
 }

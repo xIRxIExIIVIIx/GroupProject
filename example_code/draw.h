@@ -1,1 +1,2 @@
-void Draw2D();
+void DrawGame();
+void DrawMenu();
