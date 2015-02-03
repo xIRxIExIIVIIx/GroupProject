@@ -32,13 +32,11 @@ void MouseMotion(int x, int y)
 void KeyboardUp(unsigned char Key, int x, int y)
 {
   keys[Key] = false;
-  std::cout << Key << "=" << keys[Key] << std::endl;
 }
 
 void Keyboard(unsigned char Key, int x, int y)
 {
   keys[Key] = true;
-  std::cout << Key << "=" << keys[Key] << std::endl;
 }
 
 void XInput()
