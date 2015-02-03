@@ -107,7 +107,7 @@ void Init()
   glShadeModel(GL_FLAT);
 
   Entity(ENT_PLAYER, Coords(400, 400));
-  player = &entities.front();
+  entity_assignPlayer(&entities.front());
 
   // test charizard.
   Entity(ENT_ICEBERG, Coords(500, 500));

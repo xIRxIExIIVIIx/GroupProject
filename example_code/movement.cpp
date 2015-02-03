@@ -8,34 +8,29 @@ void entity_DefaultMove(Entity* e) {
 }
 
 void entity_IcebergMove(Entity* e) {
-	if (e->movement.x==0){
-		if (e->coords.x<(windowWidth/2)){
-			e->movement.x = (rand()%100+1)/100;
-		}
-		else{
-			e->movement.x = -(rand()%100+1)/100;
-		}
+
+  if (e->movement.x == 0){
+    e->movement.x = (rand() % 100 + 1) / 100;
+    if (e->coords.x>(windowWidth / 2))
+      e->movement.x = -e->movement.x;
 	}
 
-	if (e->movement.y==0){
-		if (e->coords.y<(windowHeight/2)){
-			e->movement.y = (rand()%100+1)/100;
-		}
-		else{
-			e->movement.y = -(rand()%100+1)/100;
-		}
+  if (e->movement.y == 0){
+    e->movement.y = (rand() % 100 + 1) / 100;
+    if (e->coords.y>(windowHeight / 2))
+      e->movement.y = -e->movement.y;
 	}
 
 	entity_DefaultMove(e);
 }
 
 void entity_SharkMove(Entity* e) {
-	int xDistance;
-	int yDistance;
-	int diagDistance;
+	float xDistance;
+  float yDistance;
+  float diagDistance;
 	
-	xDistance = e->coords.x - player->coords.x;		//golbal player issue
-	yDistance = e->coords.y - player->coords.y;		//golbal player issue
+	xDistance = e->coords.x - player->coords.x;
+	yDistance = e->coords.y - player->coords.y;
 	diagDistance = sqrt((xDistance*xDistance)+(yDistance*yDistance));
 
 	if (xDistance > yDistance){
@@ -47,68 +42,57 @@ void entity_SharkMove(Entity* e) {
 		e->movement.x = xDistance/yDistance;
 	}
 
-	if (diagDistance<100){
-		e->movement.x*=2;
-		e->movement.y*=2;
-		e->invincible=false;
+	if (diagDistance < 100){
+		e->movement.x *= 2;
+		e->movement.y *= 2;
+		e->invincible = false;
 	}
 	else{
-		e->invincible=true;
+		e->invincible = true;
 	}
 
 	entity_DefaultMove(e);
 }
 
 void entity_CthulhuMove(Entity* e){
-	int xDistance;
-	int yDistance;
-	int diagDistance;
-	
+  float xDistance;
+  float yDistance;
+	float diagDistance;
+
 	xDistance = e->coords.x - player->coords.x;		//golbal player issue
 	yDistance = e->coords.y - player->coords.y;		//golbal player issue
-	diagDistance = sqrt((xDistance*xDistance)+(yDistance*yDistance));
+	diagDistance = sqrt( (xDistance * xDistance) + (yDistance * yDistance) );
 
 	if (xDistance > yDistance){
 		e->movement.x = 1;
-		e->movement.y = yDistance/xDistance;
+		e->movement.y = yDistance / xDistance;
 	}
 	else{
 		e->movement.y = 1;
-		e->movement.x = xDistance/yDistance;
+		e->movement.x = xDistance / yDistance;
 	}
 
-	e->movement.x = e->movement.x*0.5;
-	e->movement.y = e->movement.y*0.5;
+  e->movement.x = e->movement.x * 0.5;
+	e->movement.y = e->movement.y * 0.5;
 
 	entity_DefaultMove(e);
 }
 
 void entity_BulletMove(Entity* e) {
-	if (e->movement.x==0){
-		e->movement.x = player->movement.x;		//global player issue
-	}
 
-	if (e->movement.y==0){
+	if (e->movement.x==0)
+		e->movement.x = player->movement.x;		//global player issue
+	
+	if (e->movement.y==0)
 		e->movement.y = player->movement.y;		//global player issue
-	}
 	
 	entity_DefaultMove(e);
 }
 
 void entity_PlayerMove(Entity* e){
-  if (keys['a']) {
-    e->movement.x = -1;	//global issue with player
-  }
-  if (keys['d']) {
-    e->movement.x = 1;		//global issue with player
-  }
-  if (keys['w']) {
-    e->movement.y = -1;		//global issue with player
-  }
-  if (keys['s']) {
-    e->movement.y = 1;	//global issue with player
-  }
-  std::cout << e->movement.x << std::endl;
+  e->movement.x = keys['a'] ? -1 : (keys['d'] ? 1 : 0);
+  e->movement.y = keys['w'] ? -1 : (keys['s'] ? 1 : 0);
+
   entity_DefaultMove(e);
 
 }
