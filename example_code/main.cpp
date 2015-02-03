@@ -107,10 +107,9 @@ void Init()
   glShadeModel(GL_FLAT);
 
   Entity(ENT_PLAYER, Coords(400, 400));
-  entity_assignPlayer(&entities.front());
 
   // test charizard.
-  Entity(ENT_SHARK, Coords(700, 700));
+  Entity(ENT_SHARK, Coords(500, 500));
 }
 
 /*
@@ -155,8 +154,8 @@ void printText(float x, float y, string str)
 // Assign an entity as a player
 void entity_assignPlayer(Entity* e) {
   player = e;
-  player->move = &entity_DefaultMove;
-  //e->entType = ENT_PLAYER;
+  player->move = &entity_PlayerMove;
+  e->entType = ENT_PLAYER;
 }
 
 float entity_GetDistance(Entity* e1, Entity* e2) {

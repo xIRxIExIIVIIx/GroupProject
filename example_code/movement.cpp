@@ -30,7 +30,6 @@ void entity_IcebergMove(Entity* e) {
 }
 
 void entity_SharkMove(Entity* e) {
-	
 	int xDistance;
 	int yDistance;
 	int diagDistance;
@@ -98,6 +97,7 @@ void entity_BulletMove(Entity* e) {
 
 void entity_PlayerMove(Entity* e){
   if (keys['a']) {
+  std::cout << "sfdghz xd" << std::endl;
     player->movement.x = -1;	//global issue with player
   }
   if (keys['d']) {

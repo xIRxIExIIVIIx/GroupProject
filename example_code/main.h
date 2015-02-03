@@ -16,6 +16,7 @@ typedef enum GAME_STATE_TYPE {
 
 //ENTITY FORWARD DECLARATIONS
 struct Entity;
+extern Entity* player;
 typedef void(*funcPtr)(Entity*);
 void entity_DefaultMove(Entity* e);
 void entity_IcebergMove(Entity* e);
@@ -54,6 +55,7 @@ typedef struct Entity {
     case ENT_PLAYER:
       this->collisionRadius = 50;
       this->move = &entity_PlayerMove;
+	  player = this;
       break;
 
     default:
@@ -83,7 +85,6 @@ extern Mouse mouse;
 extern bool keys[255];
 extern const int windowWidth;
 extern const int windowHeight;
-extern Entity* player;
 /*
  * Callable functions below here!
  * 

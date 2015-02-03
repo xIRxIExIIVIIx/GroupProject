@@ -32,16 +32,18 @@ void MouseMotion(int x, int y)
 void KeyboardUp(unsigned char Key, int x, int y)
 {
   keys[Key] = false;
+  std::cout << Key << "=" << keys[Key] << std::endl;
 }
 
 void Keyboard(unsigned char Key, int x, int y)
 {
   keys[Key] = true;
+  std::cout << Key << "=" << keys[Key] << std::endl;
 }
 
 void XInput()
 {
   // List of gamepad inputs can be found in xbox.h
-  player->movement.x = GAMEPAD_LEFT_X * 5;
-  player->movement.y = GAMEPAD_LEFT_Y * 5;
+  //player->movement.x = GAMEPAD_LEFT_X * 5;
+  //player->movement.y = GAMEPAD_LEFT_Y * 5;
 }
