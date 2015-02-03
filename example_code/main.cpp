@@ -106,11 +106,11 @@ void Init()
   glEnable(GL_TEXTURE_2D);
   glShadeModel(GL_FLAT);
 
-  Entity(ENT_MEGAMAN, Coords(400, 400));
+  Entity(ENT_PLAYER, Coords(400, 400));
   entity_assignPlayer(&entities.front());
 
   // test charizard.
-  Entity(ENT_CHARIZARD, Coords(500, 400));
+  Entity(ENT_SHARK, Coords(700, 700));
 }
 
 /*

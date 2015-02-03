@@ -18,8 +18,12 @@ typedef enum GAME_STATE_TYPE {
 struct Entity;
 typedef void(*funcPtr)(Entity*);
 void entity_DefaultMove(Entity* e);
-void entity_SharkMove(Entity* e);
 void entity_IcebergMove(Entity* e);
+void entity_SharkMove(Entity* e);
+void entity_CthuluMove(Entity* e);
+void entity_BulletMove(Entity* e);
+void entity_PlayerMove(Entity* e);
+void entity_CthulhuMove(Entity* e);
 
 //end fwd declare
 extern std::list<Entity> entities;
@@ -27,17 +31,29 @@ extern std::list<Entity> entities;
 typedef struct Entity {
   Entity(ENTITY_TYPE t, Coords c) : entType(t), coords(c){
     switch (t) { //used to initialize based on type;
-    case ENT_MEGAMAN:
-      this->movement.x = 1; //example defaults for megaman 
-      this->movement.y = 2;
-      this->health = 100;
+    case ENT_ICEBERG:
       this->collisionRadius = 50;
       this->move = &entity_IcebergMove;
       break;
 
-    case ENT_CHARIZARD:
+    case ENT_SHARK:
       this->collisionRadius = 50;
       this->move = &entity_SharkMove;
+      break;
+
+    case ENT_BULLET:
+      this->collisionRadius = 50;
+      this->move = &entity_BulletMove;
+      break;
+
+    case ENT_CTHULHU:
+      this->collisionRadius = 50;
+      this->move = &entity_CthulhuMove;
+      break;
+
+    case ENT_PLAYER:
+      this->collisionRadius = 50;
+      this->move = &entity_PlayerMove;
       break;
 
     default:

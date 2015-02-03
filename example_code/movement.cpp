@@ -27,8 +27,6 @@ void entity_IcebergMove(Entity* e) {
 	}
 
 	entity_DefaultMove(e);
-  //e->coords.x += e->movement.x;
-  //e->coords.y += e->movement.y;
 }
 
 void entity_SharkMove(Entity* e) {
@@ -60,11 +58,9 @@ void entity_SharkMove(Entity* e) {
 	}
 
 	entity_DefaultMove(e);
-	 //e->coords.x += e->movement.x;
-	 //e->coords.y += e->movement.y;
 }
 
-void entity_Cthulu(Entity* e){
+void entity_CthulhuMove(Entity* e){
 	int xDistance;
 	int yDistance;
 	int diagDistance;
@@ -86,8 +82,6 @@ void entity_Cthulu(Entity* e){
 	e->movement.y = e->movement.y*0.5;
 
 	entity_DefaultMove(e);
-	//e->coords.x += e->movement.x;
-	//e->coords.y += e->movement.y;
 }
 
 void entity_BulletMove(Entity* e) {
@@ -100,7 +94,21 @@ void entity_BulletMove(Entity* e) {
 	}
 	
 	entity_DefaultMove(e);
-	//e->coords.x += e->movement.x;
-	//e->coords.y += e->movement.y;
 }
 
+void entity_PlayerMove(Entity* e){
+  if (keys['a']) {
+    player->movement.x = -1;	//global issue with player
+  }
+  if (keys['d']) {
+    player->movement.x = 1;		//global issue with player
+  }
+  if (keys['w']) {
+    player->movement.y = -1;		//global issue with player
+  }
+  if (keys['s']) {
+    player->movement.y = 1;	//global issue with player
+  }
+  entity_DefaultMove(e);
+
+}
