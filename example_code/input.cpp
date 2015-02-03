@@ -10,7 +10,7 @@ void OnMouseClick(int button, int state, int x, int y)
   std::cout << "mouse cursor is at " << x << " " << y << std::endl;
   g_lmb = true;
   g_lmb_pos_x = x;
-  } else { // GLUT_UP
+  } else { // GLUT_UPw
   g_lmb = false;
   }
   }
@@ -26,27 +26,17 @@ void MouseMotion(int x, int y)
   //glutPostRedisplay();
 }
 
+
+
 // This is called when keyboard presses are detected.
+void KeyboardUp(unsigned char Key, int x, int y)
+{
+  keys[Key] = false;
+}
+
 void Keyboard(unsigned char Key, int x, int y)
 {
-  /*
-  if (Key == 'a') {
-  g_rectangle_pos_x -= 2.0f;
-  }
-  if (Key == 'd') {
-  g_rectangle_pos_x += 2.0f;
-  }
-  if (Key == 'w') {
-  g_rectangle_pos_y -= 2.0f;
-  }
-  if (Key == 's') {
-  g_rectangle_pos_y += 2.0f;
-  }
-
-  if (Key == 'p') {
-  std::cout << "print something on the screen..." << std::endl;
-  }
-  */
+  keys[Key] = true;
 }
 
 void XInput()

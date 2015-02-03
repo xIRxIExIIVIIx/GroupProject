@@ -14,6 +14,6 @@ void Draw2D()
   std::string test;
   char tst[64];
   int i = 420;
-  sprintf_s(tst, sizeof(char) * 64, "Score: %i", i);
+  sprintf_s(tst, sizeof(char) * 64, "x:%f y:%f", mouse.coords.x, mouse.coords.y);
   printText(20, windowHeight - 20, tst, 0, 255, 0);
 }

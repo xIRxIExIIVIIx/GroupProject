@@ -64,6 +64,7 @@ typedef struct Mouse {
 } Mouse;
 
 extern Mouse mouse;
+extern bool keys[255];
 extern const int windowWidth;
 extern const int windowHeight;
 extern Entity* player;

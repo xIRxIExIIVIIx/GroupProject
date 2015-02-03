@@ -55,7 +55,7 @@ float getStick(int id){
       break;
   }
 
-  norm = fmaxf(-1.0f, norm / 32767);
+  norm = max(-1.0f, norm / 32767);
   float amt = (fabsf(norm) < dz ? 0 : (fabsf(norm) - dz) * (norm / fabsf(norm)));
   if (dz > 0) amt /= 1 - dz;
   return amt;

@@ -33,6 +33,7 @@ const char* Instructions = " a - move left\n d - move right\n";
 // global externs defined in main.h
 
 Mouse mouse; // mouse input data
+bool keys[255];
 Entity* player; // Player pointer (currently set to first item added to entities)
 
 // OpenGL stuff:
@@ -252,6 +253,7 @@ int main(int argc,char **argv)
   glutPassiveMotionFunc(MouseMotion);
   glutMotionFunc(MouseMotion);
   glutKeyboardFunc(Keyboard);
+  glutKeyboardUpFunc(KeyboardUp);
   glutJoystickFunc(Joystick, targetFramerate);
   glutIdleFunc(PollJoystick);
   ilInit();
