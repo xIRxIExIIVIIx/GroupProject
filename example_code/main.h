@@ -18,13 +18,10 @@ typedef enum GAME_MODE {
 //ENTITY FORWARD DECLARATIONS
 struct Entity;
 typedef void(*funcPtrEnt)(Entity*);
+typedef void(*funcPtrEnt2)(Entity*, Entity*);
 typedef void(*funcPtr)(void);
-void entity_DefaultMove(Entity* e);
-void entity_IcebergMove(Entity* e);
-void entity_SharkMove(Entity* e);
-void entity_CthulhuMove(Entity* e);
-void entity_BulletMove(Entity* e);
-void entity_PlayerMove(Entity* e);
+#include "movement.h"
+#include "collision.h"
 
 //end fwd declare
 extern std::list<Entity> entities;
@@ -33,33 +30,39 @@ typedef struct Entity {
   Entity(ENTITY_TYPE t, Coords c) : entType(t), coords(c){
     switch (t) { //used to initialize based on type;
     case ENT_ICEBERG:
-      this->collisionRadius = 50;
+      this->collisionRadius = 20;
       this->move = &entity_IcebergMove;
+      this->collide = &entity_IcebergCollide;
       break;
 
     case ENT_SHARK:
-      this->collisionRadius = 50;
+      this->collisionRadius = 20;
       this->move = &entity_SharkMove;
+      this->collide = &entity_SharkCollide;
       break;
 
     case ENT_BULLET:
-      this->collisionRadius = 50;
+      this->collisionRadius = 20;
       this->move = &entity_BulletMove;
+      this->collide = &entity_BulletCollide;
       break;
 
     case ENT_CTHULHU:
-      this->collisionRadius = 50;
+      this->collisionRadius = 20;
       this->move = &entity_CthulhuMove;
+      this->collide = &entity_CthulhuCollide;
       break;
 
     case ENT_PLAYER:
-      this->collisionRadius = 50;
+      this->collisionRadius = 20;
       this->move = &entity_PlayerMove;
+      this->collide = &entity_PlayerCollide;
       break;
 
     default:
-      this->collisionRadius = 50;
+      this->collisionRadius = 20;
       this->move = &entity_DefaultMove;  //default movement function (used for players?)
+      this->collide = &entity_DefaultCollide;
       break;
     }
 
@@ -72,6 +75,7 @@ typedef struct Entity {
   int health;
   bool invincible;
   funcPtrEnt move;
+  funcPtrEnt2 collide;
 } Entity;
 
 typedef struct Mouse {

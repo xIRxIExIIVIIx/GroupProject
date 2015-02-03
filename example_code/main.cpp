@@ -24,7 +24,6 @@ int targetFramerate = 60;
 const char* Instructions = " a - move left\n d - move right\n";
 
 // import modules
-//#include "movement.h"
 #include "update.h"
 #include "draw.h"
 #include "input.h"
