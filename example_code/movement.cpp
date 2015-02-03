@@ -97,18 +97,18 @@ void entity_BulletMove(Entity* e) {
 
 void entity_PlayerMove(Entity* e){
   if (keys['a']) {
-  std::cout << "sfdghz xd" << std::endl;
-    player->movement.x = -1;	//global issue with player
+    e->movement.x = -1;	//global issue with player
   }
   if (keys['d']) {
-    player->movement.x = 1;		//global issue with player
+    e->movement.x = 1;		//global issue with player
   }
   if (keys['w']) {
-    player->movement.y = -1;		//global issue with player
+    e->movement.y = -1;		//global issue with player
   }
   if (keys['s']) {
-    player->movement.y = 1;	//global issue with player
+    e->movement.y = 1;	//global issue with player
   }
+  std::cout << e->movement.x << std::endl;
   entity_DefaultMove(e);
 
 }

@@ -107,9 +107,10 @@ void Init()
   glShadeModel(GL_FLAT);
 
   Entity(ENT_PLAYER, Coords(400, 400));
+  player = &entities.front();
 
   // test charizard.
-  Entity(ENT_SHARK, Coords(500, 500));
+  Entity(ENT_ICEBERG, Coords(500, 500));
 }
 
 /*
@@ -165,8 +166,6 @@ float entity_GetDistance(Entity* e1, Entity* e2) {
 }
 
 bool entity_CheckCollision(Entity* e1, Entity* e2) {
-  float dx = e2->coords.x - e1->coords.x;
-  float dy = e2->coords.y - e1->coords.y;
   return entity_GetDistance(e1, e2) <= (e1->collisionRadius + e2->collisionRadius);
 }
 
