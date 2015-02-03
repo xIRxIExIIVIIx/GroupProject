@@ -18,5 +18,4 @@ void Update(int t)
           else
             ent->collide(&(*ent), &(*ent2)); // trigger collision normally.
   }
-
 }
