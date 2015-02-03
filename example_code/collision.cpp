@@ -26,6 +26,6 @@ void entity_BulletCollide(Entity* e, Entity* with) {
 };
 
 void entity_PlayerCollide(Entity* e, Entity* with) {
-  std::cout << "player collide" << std::endl;
+  std::cout << "player collide (DEAD)" << std::endl;
 
 };
