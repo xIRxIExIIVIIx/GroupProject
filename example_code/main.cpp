@@ -1,27 +1,24 @@
 #include "main.h"
-//Using SDL and standard IO
-#include <SDL.h>
-#include <stdio.h>
+#include <GL/glut.h>
+#include "IL/il.h"
+#pragma comment(lib,"DevIL.lib")
 
 #include <vector>
-
-//Screen dimension constants
-const int windowWidth = 1024;
-const int windowHeight = 768;
 
 using namespace std;
 
 // Image data, used for loading textures in OpenGL
-//Starts up SDL and creates window
-bool init();
-//Loads media
-bool loadMedia();
-//Frees media and shuts down SDL
-void close();
+typedef struct Image {
+  ILuint img_width;
+  ILuint img_height;
+  GLuint img_data; // Int id for image data.
+} Image;
 
 std::list<Entity> entities; // Linked list of all entities (todo: replace with R*-tree from libspatialindex [?])
 
 // engine constants.
+const int windowWidth = 1024; 
+const int windowHeight = 768;
 int targetFramerate = 60;
 
 const char* Instructions = " a - move left\n d - move right\n";
@@ -40,12 +37,8 @@ GameState gameState;
 Entity* player; // Player pointer (currently set to first item added to entities)
 
 // OpenGL stuff:
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-//The surface contained by the window
-SDL_Surface* gScreenSurface = NULL;
-//The image we will load and show on the screen
-SDL_Surface* gHelloWorld = NULL;
+ILuint *g_img_name; // unsure, but needed.
+Image *g_images;  // pointer to image data.
 
 void drawEntity(Entity e) {
   glColor4f(1.0,1.0,1.0,0.9); // set background color
@@ -60,65 +53,60 @@ void drawEntity(Entity e) {
 }
 
 // This function is called to initialise opengl
-bool init()
+void OGLInit()
 {
-  //Initialization flag
-  bool success = true;
+  int count = 0; // for each image in sprits list (see sprites.h & sprites.cpp)
+  targetFramerate = 1000 / targetFramerate;  // set target framerate to ms/frame rather than FPS
+  while (imgstr[count]) count++; // enumerate sprites
 
-  //Initialize SDL
-  if (SDL_Init(SDL_INIT_VIDEO) < 0)
-  {
-    printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-    success = false;
-  }
-  else
-  {
-    //Create window
-    gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-    if (gWindow == NULL)
-    {
-      printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-      success = false;
+  glClearColor (1.0, 1.0, 1.0, 0.0); //set background color (white)
+
+  glEnable(GL_DEPTH_TEST);
+  //glDepthFunc(GL_LEQUAL);
+  //glEnable(GL_LIGHT0);
+  glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+	g_img_name = new ILuint[count];
+	g_images = new Image[count];
+
+  // for each image in the sprites list:
+  for (int i = 0; i < count; i++) {
+    ilGenImages(count, &g_img_name[i]); // initialize image data
+    ilBindImage(g_img_name[i]); // bind name to data
+
+    // Use DevIL to load image from file:
+    if (!ilLoadImage((const wchar_t *) imgstr[i])) {
+      std::cout << "image file not loaded" << std::endl;
+      exit(1);
     }
-    else
-    {
-      //Get window surface
-      gScreenSurface = SDL_GetWindowSurface(gWindow);
-    }
+
+    // set image params:
+    g_images[i].img_width = ilGetInteger(IL_IMAGE_WIDTH);
+    g_images[i].img_height = ilGetInteger(IL_IMAGE_HEIGHT);
+    ILenum img_format = ilGetInteger(IL_IMAGE_FORMAT);
+    ILenum img_type = ilGetInteger(IL_IMAGE_TYPE);
+    // store image data:
+    ILubyte *img_data = ilGetData();
+
+    // generate OpenGL textures from image data & bind:
+    glGenTextures(count, &g_images[i].img_data);
+    glBindTexture(GL_TEXTURE_2D, g_images[i].img_data);
+    glTexImage2D(GL_TEXTURE_2D, 0, 3, g_images[i].img_width, g_images[i].img_height, 0, img_format, img_type, img_data);
+
+    // ilDeleteImages(1, &g_img_name); // unsure what this does? Clears images from cache? if so, not needed.
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);  // also unsure, doesn't seem needed.
+    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
   }
 
-  return success;
+  // Enable drawing:
+  glEnable(GL_TEXTURE_2D);
+  glShadeModel(GL_FLAT);
 }
 
-bool loadMedia()
-{
-  //Loading success flag
-  bool success = true;
-
-  //Load splash image
-  gHelloWorld = SDL_LoadBMP("02_getting_an_image_on_the_screen/hello_world.bmp");
-  if (gHelloWorld == NULL)
-  {
-    printf("Unable to load image %s! SDL Error: %s\n", "02_getting_an_image_on_the_screen/hello_world.bmp", SDL_GetError());
-    success = false;
-  }
-
-  return success;
-}
-
-void close()
-{
-  //Deallocate surface
-  SDL_FreeSurface(gHelloWorld);
-  gHelloWorld = NULL;
-
-  //Destroy window
-  SDL_DestroyWindow(gWindow);
-  gWindow = NULL;
-
-  //Quit SDL subsystems
-  SDL_Quit();
-}
 /*
  * Prints text to screen with color.
  * note: only usable in draw.cpp and main.cpp under draw calls.
@@ -252,37 +240,8 @@ void Init()
   Entity(ENT_CTHULHU, Coords(700, 200));
 }
 
-int main(int argc, char* args[])
+int main(int argc,char **argv)
 {
-  //Start up SDL and create window
-  if (!init())
-  {
-    printf("Failed to initialize!\n");
-  }
-  else
-  {
-    //Load media
-    if (!loadMedia())
-    {
-      printf("Failed to load media!\n");
-    }
-    else
-    {
-      //Apply the image
-      SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
-      //Update the surface
-      SDL_UpdateWindowSurface(gWindow);
-      //Wait two seconds
-      SDL_Delay(2000);
-    }
-  }
-
-  //Free resources and close SDL
-  close();
-
-  return 0;
-}
-  /*
   printf(Instructions);
 
   glutInit(&argc,argv);
@@ -308,7 +267,8 @@ int main(int argc, char* args[])
   Init();
 
   glutMainLoop();
-  */
+  return 0;
+}
 
 /*
 glColor4f(0.5,0.5,0.5,0.8);
