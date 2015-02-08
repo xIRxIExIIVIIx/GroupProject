@@ -22,6 +22,12 @@ void entity_CthulhuCollide(Entity* e, Entity* with) {
 
 void entity_BulletCollide(Entity* e, Entity* with) {
   std::cout << "bullet collide" << std::endl;
+  switch (gameState.gameMode) {
+  case GAME_STANDARD:
+    // logic for bullet collision in normal (classic) games.
+    break;
+    // add extra cases here for each game mode.
+  }
 
 };
 

@@ -5,6 +5,18 @@
  * Use for game logic. Drawing from here will not work.
  **/
 
+void update_GameMainMenu()
+{
+  // update code for specific game mode 
+  // i.e. spawning, triggered every 16ms
+}
+
+void update_GameStandard()
+{
+  // update code for specific game mode 
+  // i.e. spawning, triggered every 16ms
+}
+
 void Update(int t)
 {
   //example: moves entities based on their move functions (in movement.cpp)
@@ -18,4 +30,7 @@ void Update(int t)
           else
             ent->collide(&(*ent), &(*ent2)); // trigger collision normally.
   }
+
+  funcPtr update_Game[] = { &update_GameMainMenu, &update_GameStandard };
+  update_Game[gameState.gameMode]();
 }

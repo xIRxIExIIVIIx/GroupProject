@@ -6,7 +6,6 @@ void entity_DefaultMove(Entity* e) {
 }
 
 void entity_IcebergMove(Entity* e) {
-
   if (e->movement.x == 0){
     e->movement.x = ((float)(rand() % 100 + 1)) / 100;
     if (e->coords.x>(windowWidth / 2))
@@ -32,21 +31,10 @@ void entity_SharkMove(Entity* e) {
   diagDistance = sqrt((xDistance*xDistance) + (yDistance*yDistance));
 
   if (abs(xDistance) > abs(yDistance)){
-    if (xDistance>0){
-      e->movement.x = 1;
-    }
-    else {
-      e->movement.x = -1;
-    }
+    e->movement.x = xDistance > 0 ? 1 : -1;
     e->movement.y = yDistance / abs(xDistance);
-  }
-  else{
-    if (yDistance>0){
-      e->movement.y = 1;
-    }
-    else{
-      e->movement.y = -1;
-    }
+  } else {
+    e->movement.y = yDistance > 0 ? 1 : -1;
     e->movement.x = xDistance / abs(yDistance);
   }
 
@@ -72,21 +60,10 @@ void entity_CthulhuMove(Entity* e){
   diagDistance = sqrt((xDistance*xDistance) + (yDistance*yDistance));
 
   if (abs(xDistance) > abs(yDistance)){
-    if (xDistance>0){
-      e->movement.x = 1;
-    }
-    else {
-      e->movement.x = -1;
-    }
+    e->movement.x = xDistance > 0 ? 1 : -1;
     e->movement.y = yDistance / abs(xDistance);
-  }
-  else{
-    if (yDistance>0){
-      e->movement.y = 1;
-    }
-    else{
-      e->movement.y = -1;
-    }
+  } else {
+    e->movement.y = yDistance > 0 ? 1 : -1;
     e->movement.x = xDistance / abs(yDistance);
   }
 
