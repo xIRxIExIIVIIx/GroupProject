@@ -12,7 +12,9 @@ typedef struct Coords {
 
 typedef enum GAME_MODE {
   GAME_MAIN_MENU,
-  GAME_STANDARD
+  GAME_STANDARD,
+  GAME_TITANIC,
+  GAME_SURVIVAL
 };
 
 //ENTITY FORWARD DECLARATIONS
@@ -27,7 +29,8 @@ typedef void(*funcPtr)(void);
 extern std::list<Entity> entities;
 
 typedef struct Entity {
-  Entity(ENTITY_TYPE t, Coords c) : entType(t), coords(c){
+  Entity(ENTITY_TYPE t, Coords c, int h) : entType(t), coords(c), health(h){
+    this->invincible = false;
     switch (t) { //used to initialize based on type;
     case ENT_ICEBERG:
       this->collisionRadius = 20;

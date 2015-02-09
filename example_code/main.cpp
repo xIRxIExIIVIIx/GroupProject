@@ -232,12 +232,12 @@ void Init()
 {
   gameState = {GAME_STANDARD, 0, 0};
 
-  Entity(ENT_PLAYER, Coords(400, 400));
+  Entity(ENT_PLAYER, Coords(400, 400), 3);
   entity_assignPlayer(&entities.front());
 
-  Entity(ENT_ICEBERG, Coords(500, 500));
-  Entity(ENT_SHARK, Coords(200, 200));
-  Entity(ENT_CTHULHU, Coords(700, 200));
+  Entity(ENT_ICEBERG, Coords(500, 500), 2);
+  Entity(ENT_SHARK, Coords(200, 200), 1);
+  Entity(ENT_CTHULHU, Coords(700, 200), 100);
 }
 
 int main(int argc,char **argv)
