@@ -96,6 +96,7 @@
   <ItemGroup>
     <ClInclude Include="draw.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="linkedlist.h" />
     <ClInclude Include="movement.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="update.h" />
