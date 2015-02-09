@@ -238,6 +238,10 @@ void Init()
   Entity(ENT_ICEBERG, Coords(500, 500), 2);
   Entity(ENT_SHARK, Coords(200, 200), 1);
   Entity(ENT_CTHULHU, Coords(700, 200), 100);
+
+  entlist* a;
+  a = list_Create();
+
 }
 
 int main(int argc,char **argv)

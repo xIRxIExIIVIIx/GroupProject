@@ -22,6 +22,7 @@ struct Entity;
 typedef void(*funcPtrEnt)(Entity*);
 typedef void(*funcPtrEnt2)(Entity*, Entity*);
 typedef void(*funcPtr)(void);
+
 #include "movement.h"
 #include "collision.h"
 
@@ -80,6 +81,8 @@ typedef struct Entity {
   funcPtrEnt move;
   funcPtrEnt2 collide;
 } Entity;
+
+#include "linkedlist.h"
 
 typedef struct Mouse {
   Coords coords;
