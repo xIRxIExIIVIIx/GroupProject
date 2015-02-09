@@ -1,6 +1,8 @@
-void entity_DefaultCollide(Entity* e, Entity* with);
-void entity_IcebergCollide(Entity* e, Entity* with);
-void entity_SharkCollide(Entity* e, Entity* with);
-void entity_CthulhuCollide(Entity* e, Entity* with);
-void entity_BulletCollide(Entity* e, Entity* with);
-void entity_PlayerCollide(Entity* e, Entity* with);
+#define entIt std::list<Entity>::iterator
+
+void entity_DefaultCollide(entIt e, entIt with);
+void entity_IcebergCollide(entIt e, entIt with);
+void entity_SharkCollide(entIt e, entIt with);
+void entity_CthulhuCollide(entIt e, entIt with);
+void entity_BulletCollide(entIt e, entIt with);
+void entity_PlayerCollide(entIt e, entIt with);
