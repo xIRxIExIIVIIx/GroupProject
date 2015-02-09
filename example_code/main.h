@@ -17,11 +17,11 @@ typedef enum GAME_MODE {
 
 //ENTITY FORWARD DECLARATIONS
 struct Entity;
+typedef void(*funcPtrEnt)(Entity*);
+typedef void(*funcPtrEnt2)(Entity*, Entity*);
+typedef void(*funcPtr)(void);
 #include "movement.h"
 #include "collision.h"
-typedef void(*funcPtrEnt)(Entity*);
-typedef void(*funcPtrEnt2)(entIt, entIt);
-typedef void(*funcPtr)(void);
 
 //end fwd declare
 extern std::list<Entity> entities;

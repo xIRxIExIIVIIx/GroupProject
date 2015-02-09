@@ -20,23 +20,15 @@ void update_GameStandard()
 void Update(int t)
 {
   //example: moves entities based on their move functions (in movement.cpp)
-  entIt ent = entities.begin();
-  entIt ent2 = entities.begin();
-  while (ent != entities.end()) {
+  for (std::list<Entity>::iterator ent = entities.begin(); ent != entities.end(); ++ent) {
     ent->move(&(*ent));
-
-    while (ent2 != entities.end()) {
+    for (std::list<Entity>::iterator ent2 = ent; ent2 != entities.end(); ++ent2) //for every other element.
       if (ent != ent2) // dont collide with self
         if (entity_CheckCollision(&(*ent), &(*ent2))) // if they are touching
           if (ent2->entType == ENT_BULLET)  // is ent2 a bullet?
-            ent2->collide(ent2, ent);  // trigger collision on the bullet or the object hitting the player.
+            ent2->collide(&(*ent2), &(*ent));  // trigger collision on the bullet or the object hitting the player.
           else
-            ent->collide(ent, ent2); // trigger collision normally.
-      if (ent2 != entities.end())
-        ++ent2;
-    }
-    if (ent != entities.end())
-      ++ent;
+            ent->collide(&(*ent), &(*ent2)); // trigger collision normally.
   }
 
   funcPtr update_Game[] = { &update_GameMainMenu, &update_GameStandard };
