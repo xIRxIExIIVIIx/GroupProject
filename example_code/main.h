@@ -3,6 +3,7 @@
 #include <list>
 #include "sprites.h"
 
+
 typedef struct Coords {
   Coords() : x(0), y(0) { }
   Coords(float x, float y) : x(x), y(y) { }
@@ -28,6 +29,7 @@ typedef void(*funcPtr)(void);
 
 //end fwd declare
 extern std::list<Entity> entities;
+//extern entlist* entities2;
 
 typedef struct Entity {
   Entity(ENTITY_TYPE t, Coords c, int h) : entType(t), coords(c), health(h){
@@ -71,6 +73,7 @@ typedef struct Entity {
     }
 
     entities.push_back(*this);
+	//list_Add(this, entities2);
   }
   ENTITY_TYPE entType;
   Coords coords;

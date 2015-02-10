@@ -3,6 +3,7 @@
 entlist* list_Create() {
   entlist* a = (entlist*)calloc(1, sizeof(entlist));
   a->first = (listItem*)(0);
+  a->last=(listItem*)(0);
   return a;
 }
 
@@ -32,7 +33,8 @@ bool list_Remove(Entity* e, entlist* lst) {
       current->next = temp->next;
       free(temp);
       return true;
-    } else {
+    } 
+	else {
       current = current->next;
     }
   }
@@ -40,18 +42,18 @@ bool list_Remove(Entity* e, entlist* lst) {
 
 bool list_Add(Entity* e, entlist* lst) {
   if (!lst) return false;
-  listItem* current = lst->first;
-  Entity* ent = &current->next->data;
 
-  while (current) {
-    if (ent = e) {
-      listItem* temp = current->next;
-      current->next = temp->next;
-      free(temp);
-      return true;
-    } else {
-      current = current->next;
-    }
+  listItem* lI = (listItem*)calloc(1, sizeof(listItem));
+  lI->data = *e;
+  lI->next=(listItem*)(0);
+
+  if (lst->last!=(listItem*)0){
+	lst->last->next=lI;
+	lst->last=lI;
+  }
+  else{
+	lst->first=lI;
+	lst->last=lI;
   }
 
 }
