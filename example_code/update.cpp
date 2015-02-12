@@ -22,11 +22,20 @@ void Update(int t)
 
   list_forEach(entities2, [](Entity* e){
     e->move(e);
-
-    list_forEach(entities2, [](Entity* e2){
-
+    if (e->health <= 0) {
+      list_Remove(e, entities2);
+      return;
+    }
+    list_forEach(entities2, e, [](Entity* f, Entity* e){
+      if (e != f) 
+        if (entity_CheckCollision(e, f))
+          if (e->entType == ENT_BULLET)
+            f->collide(f, e);
+          else
+            e->collide(e, f);
     });
   });
+
 
   /*
 	listItem* item = entities2->first;	//need extern to work to be uncommented <-------
