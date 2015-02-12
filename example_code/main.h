@@ -3,7 +3,6 @@
 #include <list>
 #include "sprites.h"
 
-
 typedef struct Coords {
   Coords() : x(0), y(0) { }
   Coords(float x, float y) : x(x), y(y) { }
@@ -23,7 +22,6 @@ struct Entity;
 typedef void(*funcPtrEnt)(Entity*);
 typedef void(*funcPtrEnt2)(Entity*, Entity*);
 typedef void(*funcPtr)(void);
-
 #include "movement.h"
 #include "collision.h"
 
@@ -70,7 +68,8 @@ typedef struct Entity {
       this->collide = &entity_DefaultCollide;
       break;
     }
-	//list_Add(this, entities2);
+
+    entities.push_back(*this);
   }
   ENTITY_TYPE entType;
   Coords coords;
@@ -81,10 +80,6 @@ typedef struct Entity {
   funcPtrEnt move;
   funcPtrEnt2 collide;
 } Entity;
-
-#include "linkedlist.h"
-extern entlist* entities2;			//Entlist declared to be used elsewhere
-
 
 typedef struct Mouse {
   Coords coords;
