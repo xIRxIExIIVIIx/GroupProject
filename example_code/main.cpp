@@ -14,7 +14,7 @@ typedef struct Image {
   GLuint img_data; // Int id for image data.
 } Image;
 
-entlist* entities2 = list_Create();
+entlist* entities2;
 std::list<Entity> entities; // Linked list of all entities (todo: replace with R*-tree from libspatialindex [?])
 
 // engine constants.
@@ -36,6 +36,7 @@ Mouse mouse; // mouse input data
 bool keys[255];
 GameState gameState;
 Entity* player; // Player pointer (currently set to first item added to entities)
+
 //list_Add(player, entities2);
 
 // OpenGL stuff:
@@ -149,11 +150,11 @@ void printText(float x, float y, string str)
 }
 
 // Assign an entity as a player
-void entity_assignPlayer(Entity* e) {
-  player = e;
-  player->move = &entity_PlayerMove;
-  e->entType = ENT_PLAYER;
-}
+//void entity_assignPlayer(Entity* e) {
+//  player = e;
+//  player->move = &entity_PlayerMove;
+//  e->entType = ENT_PLAYER;
+//}
 
 float entity_GetDistance(Entity* e1, Entity* e2) {
   float dx = e2->coords.x - e1->coords.x;
@@ -233,17 +234,14 @@ void Joystick(unsigned int btmsk, int x, int y, int z)
 void Init()
 {
   gameState.gameMode = GAME_STANDARD;
+  //entlist* entities2;
+  entities2 = list_Create();
 
-  Entity(ENT_PLAYER, Coords(400, 400), 3);
-  entity_assignPlayer(&entities.front());
+  player = list_Add(Entity(ENT_PLAYER, Coords(400, 400), 3) , entities2);
 
-  Entity(ENT_ICEBERG, Coords(500, 500), 2);
-  Entity(ENT_SHARK, Coords(200, 200), 1);
-  Entity(ENT_CTHULHU, Coords(700, 200), 100);
-
-  entlist* a;
-  a = list_Create();
-
+  list_Add(Entity(ENT_ICEBERG, Coords(500, 500), 2),entities2);
+  list_Add(Entity(ENT_SHARK, Coords(200, 200), 1),entities2);
+  list_Add(Entity(ENT_CTHULHU, Coords(700, 200), 100),entities2);
 }
 
 int main(int argc,char **argv)

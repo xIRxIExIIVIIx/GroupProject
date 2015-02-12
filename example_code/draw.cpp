@@ -4,8 +4,13 @@
 void DrawGame()
 {
   // Iterating entities byval, cannot change coords. used for drawing only.
-  for (auto e : entities)
-    drawEntity(e);
+
+  list_forEach(entities2, [](Entity* e){
+    drawEntity(*e);
+  });
+
+  //for (auto e : entities)
+  //  drawEntity(e);
 
   // text printing! 
   printText(mouse.coords.x, mouse.coords.y, "Test");

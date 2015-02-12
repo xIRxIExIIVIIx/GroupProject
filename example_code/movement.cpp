@@ -3,6 +3,7 @@
 void entity_DefaultMove(Entity* e) {
   e->coords.x += e->movement.x;
   e->coords.y += e->movement.y;
+    //std::cout << e->entType;
 }
 
 void entity_IcebergMove(Entity* e) {
@@ -17,6 +18,7 @@ void entity_IcebergMove(Entity* e) {
     if (e->coords.y>(windowHeight / 2))
       e->movement.y = -e->movement.y;
 	}
+  
 
 	entity_DefaultMove(e);
 }

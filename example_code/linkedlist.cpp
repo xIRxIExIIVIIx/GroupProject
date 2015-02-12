@@ -40,22 +40,28 @@ bool list_Remove(Entity* e, entlist* lst) {
   }
 }
 
-bool list_Add(Entity* e, entlist* lst) {
-  if (!lst) return false;
+Entity* list_Add(Entity e, entlist* lst) {
+  if (!lst) return (Entity*)(0);
 
   listItem* lI = (listItem*)calloc(1, sizeof(listItem));
-  lI->data = *e;
+  lI->data = e;
   lI->next=(listItem*)(0);
 
   if (lst->last!=(listItem*)0){
-	lst->last->next=lI;
-	lst->last=lI;
+	  lst->last->next=lI;
+	  lst->last=lI;
+  } else {
+	  lst->first=lI;
+	  lst->last=lI;
   }
-  else{
-	lst->first=lI;
-	lst->last=lI;
-  }
+  return &lI->data;
 
 }
 
-
+void list_forEach(entlist* lst, funcPtrEnt callback){
+  listItem* next = lst->first;
+  while (next != (listItem*)(0)){
+    callback(&next->data);
+    next = next->next;
+  }
+}

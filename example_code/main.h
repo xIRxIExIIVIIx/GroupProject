@@ -29,7 +29,6 @@ typedef void(*funcPtr)(void);
 
 //end fwd declare
 extern std::list<Entity> entities;
-//extern entlist* entities2;
 
 typedef struct Entity {
   Entity(ENTITY_TYPE t, Coords c, int h) : entType(t), coords(c), health(h){
@@ -71,8 +70,6 @@ typedef struct Entity {
       this->collide = &entity_DefaultCollide;
       break;
     }
-
-    entities.push_back(*this);
 	//list_Add(this, entities2);
   }
   ENTITY_TYPE entType;
@@ -86,6 +83,8 @@ typedef struct Entity {
 } Entity;
 
 #include "linkedlist.h"
+extern entlist* entities2;			//Entlist declared to be used elsewhere
+
 
 typedef struct Mouse {
   Coords coords;
