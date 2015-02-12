@@ -1,13 +1,17 @@
 #include "main.h"
+#include "linkedlist.h"
 
-entlist* list_Create() {
-  entlist* a = (entlist*)calloc(1, sizeof(entlist));
+list* list_Create() {
+  list* a = (list*)calloc(1, sizeof(list));
   a->first = (listItem*)(0);
+<<<<<<< HEAD
   a->last=(listItem*)(0);
   return a;
+=======
+>>>>>>> parent of 9ee74c4... totally broken again.
 }
 
-bool list_Destroy(entlist* lst) {
+bool list_Destroy(list* lst) {
   if (!lst) return false;
   listItem* current = lst->first;
 
@@ -22,7 +26,7 @@ bool list_Destroy(entlist* lst) {
   return true;
 }
 
-bool list_Remove(Entity* e, entlist* lst) {
+bool list_Remove(Entity* e, list* lst) {
   if (!lst) return false;
   listItem* current = lst->first;
   Entity* ent = &current->next->data;
@@ -40,8 +44,15 @@ bool list_Remove(Entity* e, entlist* lst) {
   }
 }
 
+<<<<<<< HEAD
 Entity* list_Add(Entity e, entlist* lst) {
   if (!lst) return (Entity*)(0);
+=======
+bool list_Add(Entity* e, list* lst) {
+  if (!lst) return false;
+  listItem* current = lst->first;
+  Entity* ent = &current->next->data;
+>>>>>>> parent of 9ee74c4... totally broken again.
 
   listItem* lI = (listItem*)calloc(1, sizeof(listItem));
   lI->data = e;

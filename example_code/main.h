@@ -23,7 +23,6 @@ struct Entity;
 typedef void(*funcPtrEnt)(Entity*);
 typedef void(*funcPtrEnt2)(Entity*, Entity*);
 typedef void(*funcPtr)(void);
-
 #include "movement.h"
 #include "collision.h"
 
@@ -82,10 +81,13 @@ typedef struct Entity {
   funcPtrEnt2 collide;
 } Entity;
 
+<<<<<<< HEAD
 #include "linkedlist.h"
 extern entlist* entities2;			//Entlist declared to be used elsewhere
 
 
+=======
+>>>>>>> parent of 9ee74c4... totally broken again.
 typedef struct Mouse {
   Coords coords;
   bool btn1;

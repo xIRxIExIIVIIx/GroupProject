@@ -233,6 +233,7 @@ void Joystick(unsigned int btmsk, int x, int y, int z)
 
 void Init()
 {
+<<<<<<< HEAD
   gameState.gameMode = GAME_STANDARD;
   //entlist* entities2;
   entities2 = list_Create();
@@ -242,6 +243,16 @@ void Init()
   list_Add(Entity(ENT_ICEBERG, Coords(500, 500), 2),entities2);
   list_Add(Entity(ENT_SHARK, Coords(200, 200), 1),entities2);
   list_Add(Entity(ENT_CTHULHU, Coords(700, 200), 100),entities2);
+=======
+  gameState = {GAME_STANDARD, 0, 0};
+
+  Entity(ENT_PLAYER, Coords(400, 400), 3);
+  entity_assignPlayer(&entities.front());
+
+  Entity(ENT_ICEBERG, Coords(500, 500), 2);
+  Entity(ENT_SHARK, Coords(200, 200), 1);
+  Entity(ENT_CTHULHU, Coords(700, 200), 100);
+>>>>>>> parent of 9ee74c4... totally broken again.
 }
 
 int main(int argc,char **argv)
