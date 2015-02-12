@@ -1,8 +1,4 @@
-#include "draw.h"
-#include "gamestate.h"
 #include "main.h"
-#include <stdlib.h>
-
 
 // Draw Method for GAME_STANDARD (and other game types at the moment)
 void DrawGame()

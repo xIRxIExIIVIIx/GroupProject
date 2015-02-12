@@ -1,21 +1,9 @@
-
 #include "main.h"
 #include <GL/glut.h>
 #include "IL/il.h"
 #pragma comment(lib,"DevIL.lib")
 
 #include <vector>
-#include "coords.h"
-#include "sprites.h"
-#include "entity.h"
-#include "linkedlist.h"
-#include "mouse.h"
-#include <list>
-#include "gamestate.h"
-#include "update.h"
-#include "draw.h"
-#include "input.h"
-#include "xbox.h"
 
 using namespace std;
 
@@ -26,7 +14,7 @@ typedef struct Image {
   GLuint img_data; // Int id for image data.
 } Image;
 
-entlist* entities2;
+entlist* entities2 = list_Create();
 std::list<Entity> entities; // Linked list of all entities (todo: replace with R*-tree from libspatialindex [?])
 
 // engine constants.
@@ -37,6 +25,10 @@ int targetFramerate = 60;
 const char* Instructions = " a - move left\n d - move right\n";
 
 // import modules
+#include "update.h"
+#include "draw.h"
+#include "input.h"
+#include "xbox.h"
 
 // global externs defined in main.h
 
@@ -44,7 +36,7 @@ Mouse mouse; // mouse input data
 bool keys[255];
 GameState gameState;
 Entity* player; // Player pointer (currently set to first item added to entities)
-
+//list_Add(player, entities2);
 
 // OpenGL stuff:
 ILuint *g_img_name; // unsure, but needed.
@@ -156,6 +148,23 @@ void printText(float x, float y, string str)
   printText(x, y, str, 0, 0, 0);
 }
 
+// Assign an entity as a player
+void entity_assignPlayer(Entity* e) {
+  player = e;
+  player->move = &entity_PlayerMove;
+  e->entType = ENT_PLAYER;
+}
+
+float entity_GetDistance(Entity* e1, Entity* e2) {
+  float dx = e2->coords.x - e1->coords.x;
+  float dy = e2->coords.y - e1->coords.y;
+  return sqrtf((dx * dx) + (dy * dy));
+}
+
+bool entity_CheckCollision(Entity* e1, Entity* e2) {
+  return entity_GetDistance(e1, e2) <= (e1->collisionRadius + e2->collisionRadius);
+}
+
 // This is the main display callback function.
 // It sets up an orthographic projection and calls Draw2D().
 void Draw()
@@ -224,14 +233,17 @@ void Joystick(unsigned int btmsk, int x, int y, int z)
 void Init()
 {
   gameState.gameMode = GAME_STANDARD;
-  entities2 = list_Create();
-  Entity(ENT_PLAYER, Coords(400, 400), 3);  
-  player = &entities.front();
-  list_Add(player, entities2);
 
-  list_Add(&Entity(ENT_ICEBERG, Coords(500, 500), 2), entities2);
-  list_Add(&Entity(ENT_SHARK, Coords(200, 200), 1), entities2);
-  list_Add(&Entity(ENT_CTHULHU, Coords(700, 200), 100), entities2);
+  Entity(ENT_PLAYER, Coords(400, 400), 3);
+  entity_assignPlayer(&entities.front());
+
+  Entity(ENT_ICEBERG, Coords(500, 500), 2);
+  Entity(ENT_SHARK, Coords(200, 200), 1);
+  Entity(ENT_CTHULHU, Coords(700, 200), 100);
+
+  entlist* a;
+  a = list_Create();
+
 }
 
 int main(int argc,char **argv)

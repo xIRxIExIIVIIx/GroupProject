@@ -1,4 +1,3 @@
-#pragma once
 
 void MouseMotion(int x, int y);
 void OnMouseClick(int button, int state, int x, int y);

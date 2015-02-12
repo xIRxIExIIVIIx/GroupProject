@@ -1,7 +1,4 @@
-#include "entity.h"
-#include "gamestate.h"
-#include <math.h>
-#include "movement.h"
+#include "main.h"
 
 void entity_DefaultMove(Entity* e) {
   e->coords.x += e->movement.x;

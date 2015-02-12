@@ -1,7 +1,4 @@
-#include "update.h"
-#include <list>
-#include "entity.h"
-#include "gamestate.h"
+#include "main.h"
 
 /**
  * Function triggered every 30 ms
@@ -22,10 +19,6 @@ void update_GameStandard()
 
 void Update(int t)
 {
-	//listItem* item = entities2->front;	//need extern to work to be uncommented <-------
-	
-
-
   //example: moves entities based on their move functions (in movement.cpp)
   for (std::list<Entity>::iterator ent = entities.begin(); ent != entities.end(); ++ent) {
     ent->move(&(*ent));

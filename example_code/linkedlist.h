@@ -1,5 +1,3 @@
-#pragma once
-#include "entity.h"
 
 typedef struct listItem {
   listItem* next;
@@ -14,4 +12,4 @@ typedef struct entlist {
 entlist* list_Create();
 bool list_Destroy(entlist* lst);
 bool list_Remove(Entity* e, entlist* lst);
-Entity* list_Add(Entity* e, entlist* lst);
+bool list_Add(Entity* e, entlist* lst);

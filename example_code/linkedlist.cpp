@@ -1,6 +1,4 @@
-
-#include <stdlib.h>
-#include "linkedlist.h"
+#include "main.h"
 
 entlist* list_Create() {
   entlist* a = (entlist*)calloc(1, sizeof(entlist));
@@ -42,21 +40,22 @@ bool list_Remove(Entity* e, entlist* lst) {
   }
 }
 
-Entity* list_Add(Entity e, entlist* lst) {
-  if (!lst) return (Entity*)(0);
+bool list_Add(Entity* e, entlist* lst) {
+  if (!lst) return false;
 
-  listItem* lstItem = (listItem*)calloc(1, sizeof(listItem));
-  lstItem->data = e;
-  lstItem->next = (listItem*)(0);
+  listItem* lI = (listItem*)calloc(1, sizeof(listItem));
+  lI->data = *e;
+  lI->next=(listItem*)(0);
 
-  if (lst->last != (listItem*)0){
-    lst->last->next = lstItem;
-    lst->last = lstItem;
-  } else {
-    lst->first = lstItem;
-    lst->last = lstItem;
+  if (lst->last!=(listItem*)0){
+	lst->last->next=lI;
+	lst->last=lI;
   }
-  return &lstItem->data;
+  else{
+	lst->first=lI;
+	lst->last=lI;
+  }
+
 }
 
 

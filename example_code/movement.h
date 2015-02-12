@@ -1,6 +1,3 @@
-#pragma once
-#include "entity.h"
-
 void entity_DefaultMove(Entity* e);
 void entity_IcebergMove(Entity* e);
 void entity_SharkMove(Entity* e);
