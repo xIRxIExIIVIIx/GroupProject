@@ -33,7 +33,8 @@ bool list_Remove(Entity* e, entlist* lst) {
       current->next = temp->next;
       free(temp);
       return true;
-    } else {
+    } 
+	else {
       current = current->next;
     }
   }
@@ -57,14 +58,10 @@ Entity* list_Add(Entity e, entlist* lst) {
 
 }
 
-void list_forEach(entlist* lst, funcPtrEnt callback) {
-  list_forEach( lst,  (Entity*)(0),  (funcPtrEnt2)callback);
-}
-
-void list_forEach(entlist* lst, Entity* ent2, funcPtrEnt2 callback){
+void list_forEach(entlist* lst, funcPtrEnt callback){
   listItem* next = lst->first;
   while (next != (listItem*)(0)){
-    callback(&next->data, ent2);
+    callback(&next->data);
     next = next->next;
   }
 }
