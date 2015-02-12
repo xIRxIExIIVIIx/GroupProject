@@ -1,4 +1,4 @@
-
+#pragma once
 
 typedef enum ENTITY_TYPE {
   ENT_ICEBERG,

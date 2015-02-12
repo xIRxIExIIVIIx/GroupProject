@@ -1,4 +1,7 @@
-#include "main.h"
+
+#include "gamestate.h"
+#include <stdlib.h>
+#include <iostream>
 
 void entity_DefaultCollide(Entity* e, Entity* with) {
   std::cout << "def collide" << std::endl;

@@ -89,6 +89,7 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="entity.cpp" />
     <ClCompile Include="update.cpp" />
     <ClCompile Include="sprites.cpp" />
     <ClCompile Include="xbox.cpp" />
@@ -96,6 +97,11 @@
   <ItemGroup>
     <ClInclude Include="draw.h" />
     <ClInclude Include="collision.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="coords.h" />
+    <ClInclude Include="gamemode.h" />
+    <ClInclude Include="gamestate.h" />
+    <ClInclude Include="mouse.h" />
     <ClInclude Include="linkedlist.h" />
     <ClInclude Include="movement.h" />
     <ClInclude Include="input.h" />

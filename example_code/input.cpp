@@ -1,4 +1,5 @@
-#include "main.h"
+#include "mouse.h"
+#include "gamestate.h"
 #include "xbox.h"
 
 // This is called when the mouse is clicked.
