@@ -233,7 +233,8 @@ void Init()
 
 int main(int argc,char **argv)
 {
-  printf(Instructions);
+  if (argc == 1) exit(0);
+  gameState.gameMode = (GAME_MODE)atoi(argv[1]);
 
   glutInit(&argc,argv);
   //	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
