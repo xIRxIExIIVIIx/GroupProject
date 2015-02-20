@@ -29,8 +29,9 @@ typedef void(*funcPtr)(void);
 extern std::list<Entity> entities;
 
 typedef struct Entity {
-  Entity(ENTITY_TYPE t, Coords c, int h) : entType(t), coords(c), health(h){
-    this->invincible = false;
+  Entity(ENTITY_TYPE t, Coords c, int h) : entType(t), coords(c), maxHealth(h){
+	this->health=h;
+	this->invincible=false;
     switch (t) { //used to initialize based on type;
     case ENT_ICEBERG:
       this->collisionRadius = 20;
@@ -76,6 +77,7 @@ typedef struct Entity {
   Coords movement;
   float collisionRadius;
   int health;
+  int maxHealth;
   bool invincible;
   funcPtrEnt move;
   funcPtrEnt2 collide;

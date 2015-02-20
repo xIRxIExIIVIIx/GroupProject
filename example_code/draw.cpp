@@ -1,23 +1,23 @@
 #include "main.h"
+#include <string>
 
 // Draw Method for GAME_STANDARD (and other game types at the moment)
 void DrawGame()
 {
   // Iterating entities byval, cannot change coords. used for drawing only.
-
-  list_forEach(entities2, [](Entity* e){
-    drawEntity(*e);
-  });
-
-  //for (auto e : entities)
-  //  drawEntity(e);
+  for (auto e : entities)
+    drawEntity(e);
 
   // text printing! 
-  printText(mouse.coords.x, mouse.coords.y, "Test");
 
+  printText(windowWidth-100, windowHeight-30, "Score: " + std::to_string(gameState.score),255,0,0);
+  printText(windowWidth-220, windowHeight-30, "Health: " + std::to_string(player->health),255,0,0);
+  if(player->invincible==true){
+	printText(windowWidth-320, windowHeight-30, "invincible",255,0,0);
+  }
+  
 
   // text printing! (with color & variables) 
-  std::string test;
   char tst[64];
   int i = 420;
   sprintf_s(tst, sizeof(char) * 64, "x:%f y:%f", mouse.coords.x, mouse.coords.y);

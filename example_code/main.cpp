@@ -59,7 +59,7 @@ void OGLInit()
   targetFramerate = 1000 / targetFramerate;  // set target framerate to ms/frame rather than FPS
   while (imgstr[count]) count++; // enumerate sprites
 
-  glClearColor (1.0, 1.0, 1.0, 0.0); //set background color (white)
+  glClearColor (0.0, 0.6, 1.0, 0.0); //set background color (white)
 
   glEnable(GL_DEPTH_TEST);
   //glDepthFunc(GL_LEQUAL);
@@ -146,13 +146,6 @@ void printText(float x, float y, string str)
   printText(x, y, str, 0, 0, 0);
 }
 
-// Assign an entity as a player
-void entity_assignPlayer(Entity* e) {
-  player = e;
-  player->move = &entity_PlayerMove;
-  e->entType = ENT_PLAYER;
-}
-
 float entity_GetDistance(Entity* e1, Entity* e2) {
   float dx = e2->coords.x - e1->coords.x;
   float dy = e2->coords.y - e1->coords.y;
@@ -189,7 +182,7 @@ void Draw()
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
-  funcPtr drawModes[] = {&DrawMenu, &DrawGame};
+  funcPtr drawModes[] = {&DrawMenu, &DrawGame, &DrawGame, &DrawGame};
   drawModes[gameState.gameMode]();
 
   // Bring the back buffer to the front and vice-versa
@@ -211,6 +204,7 @@ void gameLogic(int i)  //game logic goes here. No drawing stuff in this. Only mo
 
   //leave this alone, redraws game. Must come last.
   glutPostRedisplay(); //draw updated data
+  //if (gameState.gameMode == GAME_MAIN_MENU) return;
   glutTimerFunc(targetFramerate, gameLogic, 0); //callback for next update
 }
 
@@ -230,14 +224,11 @@ void Joystick(unsigned int btmsk, int x, int y, int z)
 
 void Init()
 {
-  gameState = {GAME_STANDARD, 0, 0};
-
-  Entity(ENT_PLAYER, Coords(400, 400), 3);
-  entity_assignPlayer(&entities.front());
-
-  Entity(ENT_ICEBERG, Coords(500, 500), 2);
-  Entity(ENT_SHARK, Coords(200, 200), 1);
-  Entity(ENT_CTHULHU, Coords(700, 200), 100);
+  gameState.gameMode=GAME_STANDARD;
+  //gameState.gameMode=GAME_TITANIC;
+  gameState.score=0;
+  Entity(ENT_PLAYER, Coords(windowWidth/2, windowHeight/2), 10);
+  player = &entities.front();
 }
 
 int main(int argc,char **argv)
@@ -249,7 +240,7 @@ int main(int argc,char **argv)
   glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);
   glutInitWindowSize(windowWidth, windowHeight);
   glutInitWindowPosition(200, 100);
-  glutCreateWindow("2D_example_screen");
+  glutCreateWindow("Sharks n' Icebergs");
 
   glutTimerFunc(targetFramerate, gameLogic, 0); // Game logic here!
   glutDisplayFunc(Draw);
