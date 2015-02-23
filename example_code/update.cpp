@@ -166,6 +166,8 @@ void Update(int t)
   }
 
   //removes any entities which need removing
+  if (keys[27])
+  	  player->health=0;
   if (player->health==0){
 	  updateScores();
 	  exit(0);

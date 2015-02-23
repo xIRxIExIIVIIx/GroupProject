@@ -44,7 +44,7 @@ void drawEntity(Entity e) {
   glColor4f(1.0, 1.0, 1.0, 1.0); // set background color
   glBindTexture(GL_TEXTURE_2D, g_images[e.entType].img_data); // choose which one before draw
   glTranslatef(e.coords.x, e.coords.y, 0);
-  glRotatef(atan2(e.movement.y, e.movement.x) * 57.2957795f , 0.0f, 0.0f, 1.0f);
+  glRotatef(atan2f(e.movement.y, e.movement.x) * 57.2957795f , 0.0f, 0.0f, 1.0f);
   glBegin(GL_QUADS); // begin quad
   // draw four corners of image:  
 	int width = g_images[e.entType].img_width / 2;
@@ -54,7 +54,7 @@ void drawEntity(Entity e) {
     glTexCoord2f(1.0, 1.0); glVertex2f(width, height);
     glTexCoord2f(1.0, 0.0); glVertex2f(width, -height);
   glEnd();  // complete draw
-  glRotatef(atan2(e.movement.y, e.movement.x) * -57.2957795f, 0.0f, 0.0f, 1.0f);
+  glRotatef(atan2f(e.movement.y, e.movement.x) * -57.2957795f, 0.0f, 0.0f, 1.0f);
   glTranslatef(0-e.coords.x, 0-e.coords.y, 0);
 }
 
@@ -241,7 +241,7 @@ int main(int argc,char **argv)
 {
  // if (argc == 1) exit(0);
  // gameState.gameMode = (GAME_MODE)atoi(argv[1]);
-	gameState.gameMode = (GAME_MODE)(1);
+	//gameState.gameMode = (GAME_MODE)(1);
   glutInit(&argc,argv);
   //	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
   glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);

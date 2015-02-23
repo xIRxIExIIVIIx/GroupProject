@@ -39,6 +39,8 @@ void KeyboardUp(unsigned char Key, int x, int y)
 void Keyboard(unsigned char Key, int x, int y)
 {
   keys[Key] = true;
+
+  std::cout <<"key pressed: " <<Key<< std::endl;
 }
 
 void XInput()
