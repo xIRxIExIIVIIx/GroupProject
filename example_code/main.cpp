@@ -41,15 +41,21 @@ ILuint *g_img_name; // unsure, but needed.
 Image *g_images;  // pointer to image data.
 
 void drawEntity(Entity e) {
-  glColor4f(1.0,1.0,1.0,0.9); // set background color
+  glColor4f(1.0, 1.0, 1.0, 1.0); // set background color
   glBindTexture(GL_TEXTURE_2D, g_images[e.entType].img_data); // choose which one before draw
+  glTranslatef(e.coords.x, e.coords.y, 0);
+  glRotatef(atan2(e.movement.y, e.movement.x) * 57.2957795f , 0.0f, 0.0f, 1.0f);
   glBegin(GL_QUADS); // begin quad
-  // draw four corners of image:
-    glTexCoord2f(0.0, 0.0); glVertex2f(e.coords.x, e.coords.y); 
-    glTexCoord2f(0.0, 1.0); glVertex2f(e.coords.x, e.coords.y + g_images[e.entType].img_height);
-    glTexCoord2f(1.0, 1.0); glVertex2f(e.coords.x + g_images[e.entType].img_height, e.coords.y + g_images[e.entType].img_height);
-    glTexCoord2f(1.0, 0.0); glVertex2f(e.coords.x + g_images[e.entType].img_height, e.coords.y);
+  // draw four corners of image:  
+	int width = g_images[e.entType].img_width / 2;
+	int height = g_images[e.entType].img_height / 2;
+    glTexCoord2f(0.0, 0.0); glVertex2f(-width, -height); 
+    glTexCoord2f(0.0, 1.0); glVertex2f(-width, height);
+    glTexCoord2f(1.0, 1.0); glVertex2f(width, height);
+    glTexCoord2f(1.0, 0.0); glVertex2f(width, -height);
   glEnd();  // complete draw
+  glRotatef(atan2(e.movement.y, e.movement.x) * -57.2957795f, 0.0f, 0.0f, 1.0f);
+  glTranslatef(0-e.coords.x, 0-e.coords.y, 0);
 }
 
 // This function is called to initialise opengl
@@ -147,8 +153,8 @@ void printText(float x, float y, string str)
 }
 
 float entity_GetDistance(Entity* e1, Entity* e2) {
-  float dx = e2->coords.x - e1->coords.x;
-  float dy = e2->coords.y - e1->coords.y;
+  float dx = (e2->coords.x + (g_images[e2->entType].img_width / 2)) - (e1->coords.x + (g_images[e1->entType].img_width / 2));
+  float dy = (e2->coords.y + (g_images[e2->entType].img_height / 2)) - (e1->coords.y + (g_images[e1->entType].img_height / 2));
   return sqrtf((dx * dx) + (dy * dy));
 }
 
@@ -233,9 +239,9 @@ void Init()
 
 int main(int argc,char **argv)
 {
-  if (argc == 1) exit(0);
-  gameState.gameMode = (GAME_MODE)atoi(argv[1]);
-
+ // if (argc == 1) exit(0);
+ // gameState.gameMode = (GAME_MODE)atoi(argv[1]);
+	gameState.gameMode = (GAME_MODE)(1);
   glutInit(&argc,argv);
   //	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
   glutInitDisplayMode(GLUT_RGBA|GLUT_DEPTH|GLUT_DOUBLE);
@@ -278,6 +284,7 @@ glEnd();
 glColor4f(0.0,0.0,0.0,1.0);
 glLineWidth(2.0);
 glPushMatrix();
+
 glTranslatef(g_rectangle_pos_x, g_rectangle_pos_y, 0.0f);
 // there's also glRotatef() if needed
 glBegin(GL_LINE_LOOP);

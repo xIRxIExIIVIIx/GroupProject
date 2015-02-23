@@ -88,6 +88,7 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="collision.cpp" />
+    <ClCompile Include="tables.cpp" />
     <ClCompile Include="update.cpp" />
     <ClCompile Include="sprites.cpp" />
     <ClCompile Include="xbox.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="collision.h" />
     <ClInclude Include="movement.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="Tables.h" />
     <ClInclude Include="update.h" />
     <ClInclude Include="sprites.h" />
     <ClInclude Include="main.h" />
