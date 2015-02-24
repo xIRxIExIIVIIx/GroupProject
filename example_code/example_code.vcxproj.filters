@@ -71,7 +71,7 @@
     <ClInclude Include="collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tables.h">
+    <ClInclude Include="tables.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
