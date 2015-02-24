@@ -93,6 +93,7 @@ typedef struct GameState {
   GAME_MODE gameMode;
   long score;
   long time;
+  std::string playerName;
 } GameState;
 
 extern GameState gameState;

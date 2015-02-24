@@ -6,7 +6,7 @@
 using namespace std;
 
 void updateScores() {
-  string tempname = "Kevin Costner";
+  string tempname = gameState.playerName;
   int tempscore= gameState.score;
   
   string filename;
