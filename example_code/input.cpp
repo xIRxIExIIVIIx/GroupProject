@@ -1,6 +1,7 @@
 #include "main.h"
 #include "xbox.h"
 
+long xinputTimer = 0;
 // This is called when the mouse is clicked.
 void OnMouseClick(int button, int state, int x, int y)
 {
@@ -39,11 +40,15 @@ void KeyboardUp(unsigned char Key, int x, int y)
 void Keyboard(unsigned char Key, int x, int y)
 {
   keys[Key] = true;
+
 }
 
 void XInput()
 {
-  // List of gamepad inputs can be found in xbox.h
-  //player->movement.x = GAMEPAD_LEFT_X * 5;
-  //player->movement.y = GAMEPAD_LEFT_Y * 5;
+	float rx = GAMEPAD_RIGHT_X, ry = GAMEPAD_RIGHT_Y;
+
+	xinputTimer++;
+	if (!(xinputTimer % 5))
+		if (fabsf(rx) > 0.5 || fabsf(ry) > 0.5) 
+			OnMouseClick(0, 0, 0, 0);
 }

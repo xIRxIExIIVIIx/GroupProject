@@ -1,6 +1,6 @@
 #include "main.h"
-#include "tables.h"
- int counter=0;
+#include "Tables.h"
+
  int playerInvuln=0;
  long timer = 0;
 /**

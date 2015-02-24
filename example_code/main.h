@@ -34,37 +34,37 @@ typedef struct Entity {
 	this->invincible=false;
     switch (t) { //used to initialize based on type;
     case ENT_ICEBERG:
-      this->collisionRadius = 20;
+      this->collisionRadius = 16;
       this->move = &entity_IcebergMove;
       this->collide = &entity_IcebergCollide;
       break;
 
     case ENT_SHARK:
-      this->collisionRadius = 20;
+      this->collisionRadius = 16;
       this->move = &entity_SharkMove;
       this->collide = &entity_SharkCollide;
       break;
 
     case ENT_BULLET:
-      this->collisionRadius = 20;
+      this->collisionRadius = 16;
       this->move = &entity_BulletMove;
       this->collide = &entity_BulletCollide;
       break;
 
     case ENT_CTHULHU:
-      this->collisionRadius = 20;
+      this->collisionRadius = 32;
       this->move = &entity_CthulhuMove;
       this->collide = &entity_CthulhuCollide;
       break;
 
     case ENT_PLAYER:
-      this->collisionRadius = 20;
+      this->collisionRadius = 16;
       this->move = &entity_PlayerMove;
       this->collide = &entity_PlayerCollide;
       break;
 
     default:
-      this->collisionRadius = 20;
+      this->collisionRadius = 16;
       this->move = &entity_DefaultMove;  //default movement function (used for players?)
       this->collide = &entity_DefaultCollide;
       break;
@@ -97,6 +97,7 @@ typedef struct GameState {
 
 extern GameState gameState;
 extern Entity* player;
+extern float playerMoveSpeedModifier;
 extern Mouse mouse;
 extern bool keys[255];
 extern const int windowWidth;

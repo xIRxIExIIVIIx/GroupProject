@@ -6,7 +6,7 @@ void DrawGame()
 {
   // Iterating entities byval, cannot change coords. used for drawing only.
   for (auto e : entities)
-    drawEntity(e);
+	  drawEntity(e);
 
   // text printing! 
 

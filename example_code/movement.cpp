@@ -1,5 +1,5 @@
 #include "main.h"
-
+#include "xbox.h"
 void entity_DefaultMove(Entity* e) {
   e->coords.x += e->movement.x;
   e->coords.y += e->movement.y;
@@ -38,12 +38,12 @@ void entity_SharkMove(Entity* e) {
   yDistance = player->coords.y - e->coords.y;
   diagDistance = sqrt((xDistance*xDistance) + (yDistance*yDistance));
 
-  if (abs(xDistance) > abs(yDistance)){
+  if (fabsf(xDistance) > fabsf(yDistance)){
     e->movement.x = xDistance > 0 ? 1 : -1;
-    e->movement.y = yDistance / abs(xDistance);
+    e->movement.y = yDistance / fabsf(xDistance);
   } else {
     e->movement.y = yDistance > 0 ? 1 : -1;
-    e->movement.x = xDistance / abs(yDistance);
+    e->movement.x = xDistance / fabsf(yDistance);
   }
 
   if (diagDistance<300){
@@ -67,16 +67,16 @@ void entity_CthulhuMove(Entity* e){
   yDistance = player->coords.y - e->coords.y;
   diagDistance = sqrt((xDistance*xDistance) + (yDistance*yDistance));
 
-  if (abs(xDistance) > abs(yDistance)){
+  if (fabsf(xDistance) > fabsf(yDistance)){
     e->movement.x = xDistance > 0 ? 1 : -1;
-    e->movement.y = yDistance / abs(xDistance);
+    e->movement.y = yDistance / fabsf(xDistance);
   } else {
     e->movement.y = yDistance > 0 ? 1 : -1;
-    e->movement.x = xDistance / abs(yDistance);
+    e->movement.x = xDistance / fabsf(yDistance);
   }
 
-  e->movement.x = e->movement.x*0.5;
-  e->movement.y = e->movement.y*0.5;
+  e->movement.x = e->movement.x * (3.5f - 3 * (e->health / 100.0f));
+  e->movement.y = e->movement.y * (3.5f - 3 * (e->health / 100.0f));
 
   entity_DefaultMove(e);
 }
@@ -89,18 +89,23 @@ void entity_BulletMove(Entity* e) {
 		float yDistance;
 		float diagDistance;
 
-		xDistance = mouse.coords.x - player->coords.x;
-		yDistance = (windowHeight - mouse.coords.y) - player->coords.y;
+		if (pollController() == 0) {
+			xDistance = mouse.coords.x - player->coords.x;
+			yDistance = (windowHeight - mouse.coords.y) - player->coords.y;
+		} else {
+			xDistance = GAMEPAD_RIGHT_X;
+			yDistance = GAMEPAD_RIGHT_Y;
+		}
 		//std::cout <<"mouse coords: "<<mouse.coords.x << '\t' << mouse.coords.y << std::endl;
 		diagDistance = sqrt((xDistance*xDistance) + (yDistance*yDistance));
 
-		if (abs(xDistance) > abs(yDistance)){
+		if (fabsf(xDistance) > fabsf(yDistance)){
 			e->movement.x = xDistance > 0 ? 1 : -1;
-			e->movement.y = yDistance / abs(xDistance);
+			e->movement.y = yDistance / fabsf(xDistance);
 
 		} else {
 			e->movement.y = yDistance > 0 ? 1 : -1;
-			e->movement.x = xDistance / abs(yDistance);
+			e->movement.x = xDistance / fabsf(yDistance);
 		}
 		e->movement.x*=10;
 		e->movement.y*=10;
@@ -109,7 +114,10 @@ void entity_BulletMove(Entity* e) {
 }
 
 void entity_PlayerMove(Entity* e){
-  e->movement.x = keys['a'] ? -2 : (keys['d'] ? 2 : 0);	//if a, left. if d, right. else 0
-  e->movement.y = keys['w'] ? -2 : (keys['s'] ? 2 : 0);	//if w, up. if s, down. else 0;
+
+  float rx = GAMEPAD_LEFT_X, ry = GAMEPAD_LEFT_Y;
+  e->movement.x = (rx == 0 ? (keys['a'] ? -1 : (keys['d'] ? 1 : 0)) : rx) * playerMoveSpeedModifier;	//if a, left. if d, right. else 0
+  e->movement.y = (ry == 0 ? (keys['w'] ? -1 : (keys['s'] ? 1 : 0)) : ry) * playerMoveSpeedModifier;	//if w, up. if s, down. else 0;
+  
   entity_DefaultMove(e);
 }

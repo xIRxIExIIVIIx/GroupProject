@@ -8,9 +8,10 @@ void entity_DefaultCollide(Entity* e, Entity* with) {
 void entity_IcebergCollide(Entity* e, Entity* with) {
   //std::cout << "iceberg collide" << std::endl;		
 	if (with->entType==ENT_ICEBERG){
-		e->health+=with->health;
-		e->maxHealth+=with->maxHealth;
-		with->health=0;			
+		e->health += with->health;
+		e->maxHealth += with->maxHealth;
+		e->collisionRadius = 16 + e->maxHealth * 2.5;
+		with->health = 0;			
 	}		
 };
 
@@ -34,10 +35,13 @@ void entity_BulletCollide(Entity* e, Entity* with) {
 				switch (with->entType){
 				case(ENT_ICEBERG):
 					gameState.score+=with->maxHealth;
+					break;
 				case(ENT_SHARK):
 					gameState.score+=2;
+					break;
 				case(ENT_CTHULHU):
-					gameState.score+=5;
+					gameState.score+=300;
+					break;
 				}
 		}
 };

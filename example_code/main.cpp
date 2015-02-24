@@ -20,6 +20,7 @@ std::list<Entity> entities; // Linked list of all entities (todo: replace with R
 const int windowWidth = 1024; 
 const int windowHeight = 768;
 int targetFramerate = 60;
+float playerMoveSpeedModifier = 5;
 
 const char* Instructions = " a - move left\n d - move right\n";
 
@@ -49,6 +50,10 @@ void drawEntity(Entity e) {
   // draw four corners of image:  
 	int width = g_images[e.entType].img_width / 2;
 	int height = g_images[e.entType].img_height / 2;
+	if (e.entType == ENT_ICEBERG) {
+		width += e.maxHealth * 5;
+		height += e.maxHealth * 5;
+	}
     glTexCoord2f(0.0, 0.0); glVertex2f(-width, -height); 
     glTexCoord2f(0.0, 1.0); glVertex2f(-width, height);
     glTexCoord2f(1.0, 1.0); glVertex2f(width, height);
@@ -201,31 +206,23 @@ void Resize(int w, int h)
   // Allow drawing in full region of the screen
   glViewport(0,0,w,h);
 }
+// controller input detected.
+void Joystick()
+{
+  if (pollController() == 1)
+    XInput();
+}
 
 void gameLogic(int i)  //game logic goes here. No drawing stuff in this. Only movement / collision checking.
 {
   // main game update function (see update.cpp)
   Update(i);
+  Joystick();
   //can add more function calls here if needed, would be better to call them from Update(i) though.
-
   //leave this alone, redraws game. Must come last.
   glutPostRedisplay(); //draw updated data
   //if (gameState.gameMode == GAME_MAIN_MENU) return;
   glutTimerFunc(targetFramerate, gameLogic, 0); //callback for next update
-}
-
-// for XInput, refreshes controller data when game is idle.
-void PollJoystick()
-{
-  if (pollController() != 1) {
-    //no controller
-  }
-}
-
-// controller input detected.
-void Joystick(unsigned int btmsk, int x, int y, int z)
-{
-  XInput();
 }
 
 void Init()
@@ -257,8 +254,7 @@ int main(int argc,char **argv)
   glutMotionFunc(MouseMotion);
   glutKeyboardFunc(Keyboard);
   glutKeyboardUpFunc(KeyboardUp);
-  glutJoystickFunc(Joystick, targetFramerate);
-  glutIdleFunc(PollJoystick);
+  //glutIdleFunc(Joystick);
   ilInit();
   OGLInit();
 
