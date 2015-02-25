@@ -227,7 +227,7 @@ void gameLogic(int i)  //game logic goes here. No drawing stuff in this. Only mo
 
 void Init()
 {
-  //gameState.gameMode=GAME_STANDARD;
+  gameState.gameMode=GAME_STANDARD;
   //gameState.gameMode=GAME_TITANIC;
   gameState.score=0;
   Entity(ENT_PLAYER, Coords(windowWidth/2, windowHeight/2), 10);
@@ -236,9 +236,9 @@ void Init()
 
 int main(int argc,char **argv)
 {
-  if (argc == 1) exit(0);
-  gameState.gameMode = (GAME_MODE)atoi(argv[1]);
-  gameState.playerName = argv[2];
+  //if (argc == 1) exit(0);
+  //gameState.gameMode = (GAME_MODE)atoi(argv[1]);
+  //gameState.playerName = argv[2];
 	//gameState.gameMode = (GAME_MODE)(1);
   glutInit(&argc,argv);
   //	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);

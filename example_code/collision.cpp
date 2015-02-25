@@ -1,5 +1,6 @@
 #include "main.h"
 #include "update.h"
+#include "input.h"
 
 void entity_DefaultCollide(Entity* e, Entity* with) {
   //std::cout << "def collide" << std::endl;
@@ -48,23 +49,33 @@ void entity_BulletCollide(Entity* e, Entity* with) {
 
 void entity_PlayerCollide(Entity* e, Entity* with) {
   //std::cout << "player collide (DEAD)" << std::endl;
-  switch(gameState.gameMode){
-	  case GAME_STANDARD:
-		  if (e->invincible != true){
-			  e->health--;
-			  e->coords=Coords(windowWidth/2, windowHeight/2);
-			  e->invincible=true;
-			  playerInvuln = 100;
-		  }
-		  break;
-	  case GAME_SURVIVAL:
-		  e->health=0;
-		  break;
-	  case GAME_TITANIC:
-		  e->health+=2;	//health is timer in this mode so increase timer
-		  gameState.score+=2;
-		  break;
-  }
+
+	if (with->entType == ENT_UPGRADE){
+		bulletDmg++;
+	}
+	else if (with->entType == ENT_SHIELD){
+		e->invincible = true;
+		playerInvuln = 300;
+	}
+	else{
+		switch(gameState.gameMode){
+			case GAME_STANDARD:
+				if (e->invincible != true){
+					e->health--;
+					e->coords=Coords(windowWidth/2, windowHeight/2);
+					e->invincible=true;
+					playerInvuln = 100;
+				}
+				break;
+			case GAME_SURVIVAL:
+				e->health=0;
+				break;
+			case GAME_TITANIC:
+				e->health+=2;	//health is timer in this mode so increase timer
+				gameState.score+=2;
+				break;
+		}
+	}
   with->health=0;
 	//respawn function. needs to call collision of the with entity
 };

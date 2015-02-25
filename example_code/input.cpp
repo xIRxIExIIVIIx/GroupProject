@@ -2,11 +2,12 @@
 #include "xbox.h"
 
 long xinputTimer = 0;
+int bulletDmg = 1;
 // This is called when the mouse is clicked.
 void OnMouseClick(int button, int state, int x, int y)
 {
 	if (gameState.gameMode!=GAME_TITANIC)
-		Entity(ENT_BULLET, Coords(player->coords.x, player->coords.y), 1);
+		Entity(ENT_BULLET, Coords(player->coords.x, player->coords.y), 1 * bulletDmg);
   /*
   if (button == GLUT_LEFT_BUTTON) {
   if (state == GLUT_DOWN) {

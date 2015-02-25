@@ -50,10 +50,11 @@ void update_GameStandard()
 	{
 		
 		Entity(ENT_CTHULHU, Coords(rand() % windowWidth, 0), 100);
+		Entity(ENT_UPGRADE, Coords(rand() % windowWidth, rand() % windowHeight), 1);
 	}
   if (timer % 1575 ==0)
   {
-	  //power ups spwaing
+		Entity(ENT_SHIELD, Coords(rand() % windowWidth, rand() % windowHeight), 1);  //power ups spwaing
   }
 }
 

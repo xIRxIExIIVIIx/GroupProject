@@ -63,6 +63,18 @@ typedef struct Entity {
       this->collide = &entity_PlayerCollide;
       break;
 
+	case ENT_UPGRADE:
+	  this->collisionRadius = 16;
+	  this->move = &entity_DefaultMove;
+	  this->collide = &entity_DefaultCollide;
+	  break;
+
+	case ENT_SHIELD:
+	  this->collisionRadius = 16;
+	  this->move = &entity_DefaultMove;
+	  this->collide = &entity_DefaultCollide;
+	  break;
+
     default:
       this->collisionRadius = 16;
       this->move = &entity_DefaultMove;  //default movement function (used for players?)

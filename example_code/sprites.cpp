@@ -7,5 +7,7 @@ const char* imgstr[] = {
   "bullet.png",
   "cthulhu.png",
   "player.png",
+  "upgrade.png",
+  "shield.png",
   NULL
 };
