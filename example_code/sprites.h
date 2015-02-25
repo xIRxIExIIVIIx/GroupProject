@@ -6,8 +6,8 @@ typedef enum ENTITY_TYPE {
   ENT_BULLET,
   ENT_CTHULHU,
   ENT_PLAYER,
-  ENT_UPGRADE,
-  ENT_SHIELD
+  ENT_UPGRADE//,
+  //ENT_SHIELD
 };
 
 extern const char* imgstr[];

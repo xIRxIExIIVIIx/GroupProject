@@ -53,10 +53,10 @@ void entity_PlayerCollide(Entity* e, Entity* with) {
 	if (with->entType == ENT_UPGRADE){
 		bulletDmg++;
 	}
-	else if (with->entType == ENT_SHIELD){
-		e->invincible = true;
-		playerInvuln = 300;
-	}
+	//else if (with->entType == ENT_SHIELD){
+	//	e->invincible = true;
+	//	playerInvuln = 300;
+	//}
 	else{
 		switch(gameState.gameMode){
 			case GAME_STANDARD:

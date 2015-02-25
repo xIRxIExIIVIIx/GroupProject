@@ -54,7 +54,7 @@ void update_GameStandard()
 	}
   if (timer % 1575 ==0)
   {
-		Entity(ENT_SHIELD, Coords(rand() % windowWidth, rand() % windowHeight), 1);  //power ups spwaing
+		//Entity(ENT_SHIELD, Coords(rand() % windowWidth, rand() % windowHeight), 1);  //power ups spwaing
   }
 }
 
