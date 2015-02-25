@@ -231,6 +231,8 @@ void Init()
   //gameState.gameMode=GAME_TITANIC;
   gameState.score=0;
   Entity(ENT_PLAYER, Coords(windowWidth/2, windowHeight/2), 10);
+  if (gameState.gameMode == GAME_SURVIVAL)
+	  player->health = 1;
   player = &entities.front();
 }
 
