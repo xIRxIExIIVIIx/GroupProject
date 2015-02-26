@@ -227,20 +227,20 @@ void gameLogic(int i)  //game logic goes here. No drawing stuff in this. Only mo
 
 void Init()
 {
-  gameState.gameMode=GAME_STANDARD;
+  //gameState.gameMode=GAME_SURVIVAL;
   //gameState.gameMode=GAME_TITANIC;
   gameState.score=0;
   Entity(ENT_PLAYER, Coords(windowWidth/2, windowHeight/2), 10);
-  if (gameState.gameMode == GAME_SURVIVAL)
-	  player->health = 1;
   player = &entities.front();
+  if (gameState.gameMode == GAME_SURVIVAL)
+	player->health = 1;
 }
 
 int main(int argc,char **argv)
 {
-  //if (argc == 1) exit(0);
-  //gameState.gameMode = (GAME_MODE)atoi(argv[1]);
-  //gameState.playerName = argv[2];
+  if (argc == 1) exit(0);
+  gameState.gameMode = (GAME_MODE)atoi(argv[1]);
+  gameState.playerName = argv[2];
 	//gameState.gameMode = (GAME_MODE)(1);
   glutInit(&argc,argv);
   //	glutInitDisplayMode(GLUT_RGB|GLUT_DEPTH|GLUT_DOUBLE);
@@ -266,45 +266,3 @@ int main(int argc,char **argv)
   glutMainLoop();
   return 0;
 }
-
-/*
-glColor4f(0.5,0.5,0.5,0.8);
-glPointSize(8);
-glBegin(GL_POINTS);
-glVertex2f(g_lmb_pos_x,240.0f);
-glEnd();
-
-glColor4f(0.2,0.8,0.2,0.5);
-glPointSize(16);
-glBegin(GL_POINTS);
-glVertex2f(480.0f,240.0f);
-glEnd();
-
-glColor4f(0.0,0.0,0.0,1.0);
-glLineWidth(2.0);
-glPushMatrix();
-
-glTranslatef(g_rectangle_pos_x, g_rectangle_pos_y, 0.0f);
-// there's also glRotatef() if needed
-glBegin(GL_LINE_LOOP);
-glVertex2f(100.0f, 200.0f);
-glVertex2f(200.0f, 200.0f);
-glVertex2f(200.0f, 150.0f);
-glVertex2f(100.0f, 150.0f);
-glEnd();
-glPopMatrix();
-
-glColor4f(0.0,0.0,1.0,1.0);
-glLineWidth(4.0);
-glBegin(GL_LINES);
-glVertex2f(150.0f,300.0f);
-glVertex2f(150.0f,400.0f);
-glEnd();
-
-glColor4f(1.0,0.0,0.0,0.5);
-glBegin(GL_TRIANGLES);
-glVertex2f(300.0f,300.0f);
-glVertex2f(400.0f,300.0f);
-glVertex2f(400.0f,350.0f);
-glEnd();
-*/

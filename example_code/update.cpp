@@ -1,5 +1,6 @@
 #include "main.h"
 #include "Tables.h"
+#include "windows.h"
 
  int playerInvuln=0;
  long timer = 0;
@@ -54,6 +55,7 @@ void update_GameStandard()
 	}
   if (timer % 1575 ==0)
   {
+	  Entity(ENT_UPGRADE, Coords(rand() % windowWidth, rand() % windowHeight), 1);
 		//Entity(ENT_SHIELD, Coords(rand() % windowWidth, rand() % windowHeight), 1);  //power ups spwaing
   }
 }
@@ -172,11 +174,6 @@ void Update(int t)
   if (player->health==0){
 	  updateScores();
 	  exit(0);
-	  
-	//leaderboard here
-	//go to main menu
-	  //gameState.gameMode==GAME_MAIN_MENU;
-	//exit game
   }
 
   funcPtr update_Game[] = { &update_GameMainMenu, &update_GameStandard, &update_GameTitanic, &update_GameSurvival};

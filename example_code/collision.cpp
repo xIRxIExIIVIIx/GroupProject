@@ -30,7 +30,7 @@ void entity_BulletCollide(Entity* e, Entity* with) {
   //std::cout << "bullet collide" << std::endl;
 	if(with->entType!=ENT_BULLET && with->entType!=ENT_PLAYER)
 		if(with->invincible==false){
-			e->health=0;
+			e->health--;
 			with->health--;	  
 			if (with->health<=0 && gameState.gameMode==GAME_STANDARD)
 				switch (with->entType){
@@ -51,12 +51,17 @@ void entity_PlayerCollide(Entity* e, Entity* with) {
   //std::cout << "player collide (DEAD)" << std::endl;
 
 	if (with->entType == ENT_UPGRADE){
-		bulletDmg++;
+		int x = rand() % 30;
+		if (x < 10)
+			bulletDmg++;
+		else if (x > 20){
+			e->invincible = true;
+			playerInvuln = 500;
+		}
+		else
+			e->health++;
 	}
-	//else if (with->entType == ENT_SHIELD){
-	//	e->invincible = true;
-	//	playerInvuln = 300;
-	//}
+
 	else{
 		switch(gameState.gameMode){
 			case GAME_STANDARD:
